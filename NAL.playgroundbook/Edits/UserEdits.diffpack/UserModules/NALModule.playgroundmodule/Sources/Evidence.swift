@@ -34,7 +34,7 @@ extension Evidence {
 }
 
 extension Evidence {
-    init<S: Statement>(_ statement: S, knowledgeBase kb: KnowledgeBase) {
+    init(_ statement: Statement, knowledgeBase kb: KnowledgeBase) {
         let extS = kb.extension(statement.subject)
         let extP = kb.extension(statement.predicate)
         let intS = kb.intension(statement.subject)

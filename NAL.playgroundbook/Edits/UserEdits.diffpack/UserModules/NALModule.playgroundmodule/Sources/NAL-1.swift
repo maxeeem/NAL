@@ -1,32 +1,31 @@
 
-
-public enum Sentence<S: Statement> {
-    case judgement(S)
-    case question(S)
+public enum Sentence {
+    case judgement(Judgement)
+    case question(Question)
 }
 
 public protocol Judgement {
-    associatedtype S: Statement
-    var statement: S { get }
+    var statement: Statement { get }
     var truthValue: TruthValue { get }
 }
 
-public protocol Question {
-    associatedtype S: Statement
-    var statement: S { get }
+public enum Question {
+    case statement(Statement)
+    case left(Copula, Term)
+    case right(Term, Copula)
 }
 
-public protocol Statement: Hashable, CustomStringConvertible {
-    associatedtype S: Term
-    associatedtype P: Term
-    var subject: S { get }
-    var copula: Copula<S, P, Self> { get }
-    var predicate: P { get }
+public protocol Statement {
+    var subject: Term { get }
+    var copula: Copula { get }
+    var predicate: Term { get }
 }
 
-public typealias Copula<S: Term, P: Term, M: Statement> = (S, P) -> M
+public enum Copula: String {
+    case inheritance = "-->"
+}
 
-public protocol Term: Hashable, CustomStringConvertible, ExpressibleByStringLiteral {
-    // var description: String
+public protocol Term {
+    func equals(_ other: Term) -> Bool
 }
 

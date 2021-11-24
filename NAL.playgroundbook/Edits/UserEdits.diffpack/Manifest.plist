@@ -26,19 +26,11 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Inheritance.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
 				<string>UserModules/NALModule.playgroundmodule/Sources/Eval.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
 				<string>UserModules/NALModule.playgroundmodule/Sources/KnowledgeBase.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Statement.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
@@ -75,6 +67,10 @@
 			<dict>
 				<key>File</key>
 				<string>UserModules/NALModule.playgroundmodule/Sources/NAL-1.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/NALModule.playgroundmodule/Sources/Copula.swift</string>
 			</dict>
 		</array>
 		<key>Modified</key>

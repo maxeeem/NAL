@@ -1,23 +1,38 @@
 
-// Basic form of Term
+/// Basic form of Term
 public struct Word: Term {
-    public var description: StringLiteralType
+    let name: String
+}
+
+extension Word: Hashable {
+    public var hashValue: Int {
+        return self.name.hashValue
+    }
+    public static func == (left: Word, right: Word) -> Bool {
+        return left.name == right.name
+    }
+}
+
+extension Word: CustomStringConvertible {
+    public var description: String { name }
+}
+
+extension Word: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
-        self.description = value
+        self.name = value
     }
 }
 
-// Basic form of Statement
-public struct InheritanceStatement<S: Term, P: Term>: Statement {
-    public var subject: S
-    public var copula: Copula<S, P, Self> = { $0 --> $1 }
-    public var predicate: P
+/// Basic form of Statement
+public struct InheritanceStatement: Statement {
+    public var subject: Term
+    public var copula: Copula = .inheritance
+    public var predicate: Term
 }
 
-// Basic form of a Question
-public struct BasicQuestion<S: Statement>: Question {
-    public var statement: S
-    public init(_ statement: S) {
-        self.statement = statement
+extension InheritanceStatement: CustomStringConvertible {
+    public var description: String {
+        String(describing: subject) + " " + copula.rawValue + " " + String(describing: predicate)
     }
 }
+
