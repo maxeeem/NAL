@@ -14,19 +14,17 @@ kb.insert("bird --&gt; animal")
 kb.insert("robin --&gt; bird")
 
 // question answering
-print(eval("bird --&gt; animal"))
-print(eval("bird --&gt; mammal"))
-
-print("----------")
+kb.answer("bird --&gt; animal")
+kb.answer("bird --&gt; mammal")
 
 // substitution
-kb.infer("bird --&gt; ?")
-kb.infer("? --&gt; animal")
+kb.answer("bird --&gt; ?")
+kb.answer("? --&gt; animal")
 
 
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 331}</string>
+			<string>{1, 308}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

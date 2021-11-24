@@ -11,8 +11,8 @@ public struct Judgement {
 
 public enum Question {
     case statement(Statement)
-    case left(Copula, Term)
-    case right(Term, Copula)
+    case general(Copula, Term)
+    case special(Term, Copula)
 }
 
 public struct Statement: Hashable {

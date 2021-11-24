@@ -1,6 +1,6 @@
 import Foundation 
 
-public func process(_ input: String) -> Statement {
+func process(_ input: String) -> Statement {
     let words = input.components(separatedBy: " ")
     let subject = Term.word(words[0])
     let predicate = Term.word(words[2])
@@ -8,16 +8,16 @@ public func process(_ input: String) -> Statement {
     return copula.makeStatement(subject, predicate)
 }
 
-public func eval(_ string: String) -> TruthValue {
+func eval(_ string: String) -> TruthValue {
     let statement = process(string)
     return eval(statement)
 }
 
-public func eval(_ statement: Statement) -> TruthValue {
+func eval(_ statement: Statement) -> TruthValue {
     eval(statement, knowledgeBase: KnowledgeBase.instance)
 }
 
-public func eval(_ statement: Statement, knowledgeBase kb: KnowledgeBase) -> TruthValue {
+func eval(_ statement: Statement, knowledgeBase kb: KnowledgeBase) -> TruthValue {
     print("\nconsider:", statement, "?")
     
     if isTautology(statement) {

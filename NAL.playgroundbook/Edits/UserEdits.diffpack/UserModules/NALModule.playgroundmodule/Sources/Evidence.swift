@@ -44,7 +44,7 @@ extension Evidence {
         let total = extS.count + intP.count
         
         self.init(positive, total)
-        print("evidence:", self)
+        //print("evidence:", self)
     }
 }
 
