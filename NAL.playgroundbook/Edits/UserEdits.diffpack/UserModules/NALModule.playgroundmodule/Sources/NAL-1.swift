@@ -4,9 +4,9 @@ public enum Sentence {
     case question(Question)
 }
 
-public protocol Judgement {
-    var statement: Statement { get }
-    var truthValue: TruthValue { get }
+public struct Judgement {
+    let statement: Statement
+    let truthValue: TruthValue
 }
 
 public enum Question {
@@ -15,17 +15,17 @@ public enum Question {
     case right(Term, Copula)
 }
 
-public protocol Statement {
-    var subject: Term { get }
-    var copula: Copula { get }
-    var predicate: Term { get }
+public struct Statement: Hashable {
+    let subject: Term
+    let copula: Copula
+    let predicate: Term
 }
 
 public enum Copula: String {
     case inheritance = "-->"
 }
 
-public protocol Term {
-    func equals(_ other: Term) -> Bool
+public enum Term: Hashable {
+    case word(String)
 }
 

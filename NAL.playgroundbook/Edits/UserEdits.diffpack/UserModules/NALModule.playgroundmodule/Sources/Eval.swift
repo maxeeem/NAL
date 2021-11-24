@@ -2,8 +2,8 @@ import Foundation
 
 public func process(_ input: String) -> Statement {
     let words = input.components(separatedBy: " ")
-    let subject = Word(description: words[0])
-    let predicate = Word(description: words[2])
+    let subject = Term.word(words[0])
+    let predicate = Term.word(words[2])
     let copula = Copula(rawValue: words[1])!
     return copula.makeStatement(subject, predicate)
 }
@@ -24,7 +24,7 @@ public func eval(_ statement: Statement, knowledgeBase kb: KnowledgeBase) -> Tru
         return TruthValue(1, 1)
     }
     
-    if isTransitive(statement, knowledge: kb.knowledgeArray) {
+    if isTransitive(statement, knowledge: kb.knowledge) {
         let ev = Evidence(statement, knowledgeBase: kb)
         kb.knowledge.insert(statement)
         return ev.truthValue
@@ -40,12 +40,12 @@ public func eval(_ statement: Statement, knowledgeBase kb: KnowledgeBase) -> Tru
 
 // Private
 func isTautology(_ statement: Statement) -> Bool {
-    statement.subject.equals(statement.predicate)
+    statement.subject == statement.predicate
 }
 
-func isTransitive(_ statement: Statement, knowledge: Array<Statement>) -> Bool {
-    let matchingSubject = Set(knowledge.filter({ $0.subject.equals(statement.subject) }).map({ String(describing: $0.predicate) }))
-    let matchingPredicate = Set(knowledge.filter({ $0.predicate.equals(statement.predicate) }).map({ String(describing: $0.subject) }))
+func isTransitive(_ statement: Statement, knowledge: Set<Statement>) -> Bool {
+    let matchingSubject = Set(knowledge.filter({ $0.subject == statement.subject }).map({ $0.predicate }))
+    let matchingPredicate = Set(knowledge.filter({ $0.predicate == statement.predicate }).map({ $0.subject }))
     let hasCommonTerm = !matchingSubject.isDisjoint(with: matchingPredicate)
     return hasCommonTerm
 }

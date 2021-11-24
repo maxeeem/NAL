@@ -1,11 +1,7 @@
 
 public class KnowledgeBase {
     public static let instance = KnowledgeBase()
-    public var knowledge: Set<String> = []
-    
-    public var knowledgeArray: [Statement] {
-        knowledge.map({ process($0) })
-    }
+    public var knowledge: Set<Statement> = []
     
     public var verboseOutput = true
     
@@ -23,7 +19,7 @@ public class KnowledgeBase {
             return // no need to insert tautology
         }
         
-        knowledge.insert(String(describing: statement))
+        knowledge.insert(statement)
         
         //tmp
         infer(statement)
@@ -39,24 +35,24 @@ public class KnowledgeBase {
     }
     
     public func infer(_ statement: Statement) {
-        if statement is InheritanceStatement {
+        if statement.copula == .inheritance {
             
-            if statement.subject as? Word == "?" {
+            if case .word(let word) = statement.subject, word == "?" {
                 answer(.left(statement.copula, statement.predicate))
                 
-            } else if statement.predicate as? Word == "?" {
+            } else if case .word(let word) = statement.predicate, word == "?" {
                 answer(.right(statement.subject, statement.copula))
                 
             } else {
-                let inheritanceStatements = knowledgeArray.filter({ $0 is InheritanceStatement })
+                let inheritanceStatements = knowledge.filter({ $0.copula == .inheritance })
                 
-                let matchingSubject = Set(inheritanceStatements.filter({ $0.subject.equals(statement.predicate) }).map({ String(describing: $0) }))
-                let matchingPredicate = Set(inheritanceStatements.filter({ $0.predicate.equals(statement.subject) }).map({ String(describing: $0) }))
+                let matchingSubject = Set(inheritanceStatements.filter({ $0.subject == statement.predicate }))
+                let matchingPredicate = Set(inheritanceStatements.filter({ $0.predicate == statement.subject }))
                 let matches = matchingSubject.union(matchingPredicate)
                 
-                for match in matches.map({process($0) as! InheritanceStatement}) {
+                for match in matches {
                     // apply deduction rule
-                    let newStatement = deduction(premise1: match, premise2: statement as! InheritanceStatement)
+                    let newStatement = deduction(premise1: match, premise2: statement)
                     print("++", newStatement)
                     insert(newStatement, inference: true) // insert derived knowledge
                 }
@@ -66,9 +62,9 @@ public class KnowledgeBase {
 }
 
 extension KnowledgeBase {
-    public var vocabulary: Set<String> {
-        var vocab: Set<String> = []
-        for statement in knowledgeArray {
+    public var vocabulary: Set<Term> {
+        var vocab: Set<Term> = []
+        for statement in knowledge {
             vocab.insert(statement.subject)
             vocab.insert(statement.predicate)
         }
@@ -77,34 +73,34 @@ extension KnowledgeBase {
 }
 
 extension KnowledgeBase {
-    public func intension(_ term: String) -> Set<String> {
-        intension(Word(stringLiteral: term))
+    public func intension(_ term: String) -> Set<Term> {
+        intension(Term.word(term))
     }
     
-    public func intension(_ term: Term) -> Set<String> {
+    public func intension(_ term: Term) -> Set<Term> {
         if !vocabulary.contains(term) {
             return [] // not a known term
         }
-        var int: Set<String> = [String(describing: term)]
-        for statement in knowledgeArray {
-            if statement.subject.equals(term) {
+        var int: Set<Term> = [term]
+        for statement in knowledge {
+            if statement.subject == term {
                 int.insert(statement.predicate)
             }
         }
         return int
     }
     
-    public func `extension`(_ term: String) -> Set<String> {
-        `extension`(Word(stringLiteral: term))
+    public func `extension`(_ term: String) -> Set<Term> {
+        `extension`(Term.word(term))
     }
     
-    public func `extension`(_ term: Term) -> Set<String> {
+    public func `extension`(_ term: Term) -> Set<Term> {
         if !vocabulary.contains(term) {
             return [] // not a known term
         }
-        var ext: Set<String> = [String(describing: term)]
-        for statement in knowledgeArray {
-            if statement.predicate.equals(term) {
+        var ext: Set<Term> = [term]
+        for statement in knowledge {
+            if statement.predicate == term {
                 ext.insert(statement.subject)
             }
         }
@@ -119,36 +115,21 @@ extension KnowledgeBase {
             _ = eval(statement)
         case .left(let copula, let term):
             print("\n$", term, "is a general case of what?")
-            var answers = `extension`(term).subtracting(Set(arrayLiteral: String(describing: term))).map({ Word(description: $0) })
+            var answers = `extension`(term).subtracting(Set(arrayLiteral: term))
             print("~", answers)
             for answer in answers {
-                let newStatement = InheritanceStatement(subject: answer, predicate: term)
+                let newStatement = Statement(subject: answer, copula: copula, predicate: term)
                 //print(eval(newStatement))
             }
         case .right(let term, let copula):
             print("\n$", term, "is a special case of what?")
-            var answers = intension(term).subtracting(Set(arrayLiteral: String(describing: term))).map({ Word(description: $0) })
+            var answers = intension(term).subtracting(Set(arrayLiteral: term))
             print("~", answers)
             for answer in answers {
-                let newStatement = InheritanceStatement(subject: term, predicate: answer)
+                let newStatement = Statement(subject: term, copula: copula, predicate: answer)
                 //print(eval(newStatement))
             }
         }
     }
 }
 
-
-extension Set where Element == String {
-    mutating func insert(_ term: Term) {
-        self.insert(String(describing: term))
-    }
-    mutating func insert(_ statement: Statement) {
-        self.insert(String(describing: statement))
-    }
-    func contains(_ term: Term) -> Bool {
-        self.contains(String(describing: term))
-    }
-    func contains(_ statement: Statement) -> Bool {
-        self.contains(String(describing: statement))
-    }
-}

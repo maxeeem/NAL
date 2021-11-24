@@ -34,14 +34,6 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Term.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/BasicForm.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
 				<string>UserModules/NALModule.playgroundmodule/Sources/Inference.swift</string>
 			</dict>
 			<dict>
