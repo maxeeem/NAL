@@ -119,7 +119,7 @@ extension KnowledgeBase {
             _ = eval(statement)
         case .left(let copula, let term):
             print("\n$", term, "is a general case of what?")
-            var answers = `extension`(term).subtracting(Set(arrayLiteral: String(describing: term))).map({ Word(name: $0) })
+            var answers = `extension`(term).subtracting(Set(arrayLiteral: String(describing: term))).map({ Word(description: $0) })
             print("~", answers)
             for answer in answers {
                 let newStatement = InheritanceStatement(subject: answer, predicate: term)
@@ -127,7 +127,7 @@ extension KnowledgeBase {
             }
         case .right(let term, let copula):
             print("\n$", term, "is a special case of what?")
-            var answers = intension(term).subtracting(Set(arrayLiteral: String(describing: term))).map({ Word(name: $0) })
+            var answers = intension(term).subtracting(Set(arrayLiteral: String(describing: term))).map({ Word(description: $0) })
             print("~", answers)
             for answer in answers {
                 let newStatement = InheritanceStatement(subject: term, predicate: answer)

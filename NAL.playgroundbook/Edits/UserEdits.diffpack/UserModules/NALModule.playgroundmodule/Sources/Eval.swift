@@ -2,8 +2,8 @@ import Foundation
 
 public func process(_ input: String) -> Statement {
     let words = input.components(separatedBy: " ")
-    let subject = Word(name: words[0])
-    let predicate = Word(name: words[2])
+    let subject = Word(description: words[0])
+    let predicate = Word(description: words[2])
     let copula = Copula(rawValue: words[1])!
     return copula.makeStatement(subject, predicate)
 }

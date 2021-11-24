@@ -1,25 +1,21 @@
 
 /// Basic form of Term
 public struct Word: Term {
-    let name: String
+    public let description: String
 }
 
 extension Word: Hashable {
     public var hashValue: Int {
-        return self.name.hashValue
+        return self.description.hashValue
     }
     public static func == (left: Word, right: Word) -> Bool {
-        return left.name == right.name
+        return left.description == right.description
     }
 }
 
-extension Word: CustomStringConvertible {
-    public var description: String { name }
-}
-
-extension Word: ExpressibleByStringLiteral {
+extension Word: CustomStringConvertible, ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
-        self.name = value
+        self.description = value
     }
 }
 
