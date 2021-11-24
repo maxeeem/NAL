@@ -95,22 +95,22 @@ extension KnowledgeBase {
 }
 
 extension KnowledgeBase {
-    public func answer(_ string: String) {
+    public func query(_ string: String) {
         let statement = process(string)
-        answer(statement)
+        query(statement)
     }
     
-    public func answer(_ statement: Statement) {
-        if knowledge.contains(statement) {
-            answer(.statement(statement))
-        } else if case .word(let word) = statement.subject, word == "?" {
-            answer(.general(statement.copula, statement.predicate))
+    public func query(_ statement: Statement) {
+        if case .word(let word) = statement.subject, word == "?" {
+            query(.general(statement.copula, statement.predicate))
         } else if case .word(let word) = statement.predicate, word == "?" {
-            answer(.special(statement.subject, statement.copula))
+            query(.special(statement.subject, statement.copula))
+        } else {
+            query(.statement(statement))
         }
     }
     
-    public func answer(_ question: Question) {
+    public func query(_ question: Question) {
         switch question {
         case .statement(let statement):
             let truthValue = eval(statement)

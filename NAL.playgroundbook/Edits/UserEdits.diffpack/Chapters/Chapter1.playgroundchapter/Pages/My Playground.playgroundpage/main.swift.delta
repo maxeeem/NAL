@@ -14,17 +14,22 @@ kb.insert("bird --&gt; animal")
 kb.insert("robin --&gt; bird")
 
 // question answering
-kb.answer("bird --&gt; animal")
-kb.answer("bird --&gt; mammal")
+kb.query("bird --&gt; animal")
+kb.query("bird --&gt; mammal")
 
 // substitution
-kb.answer("bird --&gt; ?")
-kb.answer("? --&gt; animal")
+kb.query("bird --&gt; ?")
+kb.query("? --&gt; animal")
+
+let q1 = Question.special(Term.word("bird"), .inheritance)
+let q2 = Question.general(.inheritance, Term.word("animal"))
+kb.query(q1)
+kb.query(q2)
 
 
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 308}</string>
+			<string>{1, 451}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
