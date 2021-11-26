@@ -3,6 +3,11 @@ struct Evidence {
     let positive: Double
     let total: Double
     
+    init(_ positive: Double, _ total: Double) {
+        self.positive = positive
+        self.total = total
+    }
+    
     init(_ positive: Int, _ total: Int) {
         self.positive = Double(positive)
         self.total = Double(total)

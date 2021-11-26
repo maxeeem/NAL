@@ -102,9 +102,9 @@ extension KnowledgeBase {
     
     public func query(_ statement: Statement) {
         if case .word(let word) = statement.subject, word == "?" {
-            query(.general(statement.copula, statement.predicate))
+            query(.special(statement.copula, statement.predicate))
         } else if case .word(let word) = statement.predicate, word == "?" {
-            query(.special(statement.subject, statement.copula))
+            query(.general(statement.subject, statement.copula))
         } else {
             query(.statement(statement))
         }
@@ -115,8 +115,8 @@ extension KnowledgeBase {
         case .statement(let statement):
             let truthValue = eval(statement)
             print(truthValue)
-        case .general(let copula, let term):
-            print("\n$", term, "is a general case of what?")
+        case .special(let copula, let term):
+            print("\n$ what is a special case of \(term)?")
             var answers = `extension`(term).subtracting(Set(arrayLiteral: term))
             print("~", answers)
             for answer in answers {
@@ -125,8 +125,8 @@ extension KnowledgeBase {
                     print(eval(newStatement))
                 }
             }
-        case .special(let term, let copula):
-            print("\n$", term, "is a special case of what?")
+        case .general(let term, let copula):
+            print("\n$ what is a general case of \(term)?")
             var answers = intension(term).subtracting(Set(arrayLiteral: term))
             print("~", answers)
             for answer in answers {

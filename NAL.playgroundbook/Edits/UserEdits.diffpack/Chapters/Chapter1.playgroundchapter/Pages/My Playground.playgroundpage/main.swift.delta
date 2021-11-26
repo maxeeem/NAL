@@ -21,15 +21,38 @@ kb.query("bird --&gt; mammal")
 kb.query("bird --&gt; ?")
 kb.query("? --&gt; animal")
 
-let q1 = Question.special(Term.word("bird"), .inheritance)
-let q2 = Question.general(.inheritance, Term.word("animal"))
+let q1 = Question.general(Term.word("bird"), .inheritance)
+let q2 = Question.special(.inheritance, Term.word("animal"))
 kb.query(q1)
 kb.query(q2)
 
+let j1 = Judgement(Statement(Term.word("robin"), .inheritance, Term.word("bird")), TruthValue(1.0, 0.8))
+let j2 = Judgement(Statement(Term.word("penguin"), .inheritance, Term.word("bird")), TruthValue(0.9, 0.9))
+print(choice(j1: j1, j2: j2)) // robin
 
+print(not(0.3)) // 0.7
+print(and(0.2, 0.4)) // 0.08
+print(or(0.2, 0.4)) // 0.52
+
+print("------deduction")
+let j3 = Judgement(Statement(Term.word("bird"), .inheritance, Term.word("animal")), TruthValue(1.0, 0.9))
+let j4 = Judgement(Statement(Term.word("robin"), .inheritance, Term.word("bird")), TruthValue(1.0, 0.9))
+print(deduction(j1: j3, j2: j4)) // robin--&gt;animal&lt;1,0.81&gt;
+print("------induction")
+let j5 = Judgement(Statement(Term.word("robin"), .inheritance, Term.word("animal")), TruthValue(1.0, 0.9))
+let j6 = Judgement(Statement(Term.word("robin"), .inheritance, Term.word("bird")), TruthValue(1.0, 0.9))
+print(induction(j1: j5, j2: j6)) // bird--&gt;animal&lt;1,0.45&gt;
+print("------abduction")
+let j7 = Judgement(Statement(Term.word("bird"), .inheritance, Term.word("animal")), TruthValue(1.0, 0.9))
+let j8 = Judgement(Statement(Term.word("robin"), .inheritance, Term.word("animal")), TruthValue(1.0, 0.9))
+print(abduction(j1: j7, j2: j8)) // robin--&gt;bird&lt;1,0.45&gt;
+print("------exemplification")
+let j9 = Judgement(Statement(Term.word("robin"), .inheritance, Term.word("bird")), TruthValue(1.0, 0.9))
+let j10 = Judgement(Statement(Term.word("bird"), .inheritance, Term.word("animal")), TruthValue(1.0, 0.9))
+print(exemplification(j1: j9, j2: j10)) // animal--&gt;robin&lt;1,0.45&gt;
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 451}</string>
+			<string>{1, 1977}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
