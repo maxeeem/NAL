@@ -2,87 +2,64 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BaseVersion</key>
-	<string>1.0</string>
-	<key>DiffPackType</key>
-	<string>UserEdit</string>
-	<key>DocumentType</key>
-	<string>PlaygroundBook</string>
-	<key>Name</key>
+	<key>BaseContentIdentifier</key>
 	<string>com.apple.playgrounds.blank</string>
-	<key>UpdateVersion</key>
+	<key>BaseContentVersion</key>
 	<string>1.0</string>
-	<key>Updates</key>
+	<key>ContentType</key>
+	<string>PlaygroundBookUserEdit</string>
+	<key>Diffs</key>
 	<dict>
-		<key>Added</key>
-		<array>
-			<dict>
-				<key>File</key>
-				<string>Chapters/Chapter1.playgroundchapter/UserManifest.plist</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/UserManifest.plist</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Eval.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/KnowledgeBase.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Inference.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Utility.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Constants.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Evidence.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/TruthValue.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/FrequencyInterval.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/NAL-1.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/NALModule.playgroundmodule/Sources/Copula.swift</string>
-			</dict>
-		</array>
-		<key>Modified</key>
-		<array>
-			<dict>
-				<key>Diff</key>
-				<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift.delta</string>
-				<key>File</key>
-				<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
-			</dict>
-		</array>
-		<key>Removed</key>
-		<array>
-			<dict>
-				<key>File</key>
-				<string>UserModules/UserModule.playgroundmodule/Sources/SharedCode.swift</string>
-			</dict>
-		</array>
-		<key>Replaced</key>
-		<array/>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/156DE8C9-F05A-4E71-A66E-67B3FDC4BD90.playgroundpage/UserManifest.plist</key>
+		<string>Added</string>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/156DE8C9-F05A-4E71-A66E-67B3FDC4BD90.playgroundpage/main.swift</key>
+		<string>Modified</string>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/89B149BB-34C2-47F1-8C93-12C36200FF07.playgroundpage/UserManifest.plist</key>
+		<string>Added</string>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/89B149BB-34C2-47F1-8C93-12C36200FF07.playgroundpage/main.swift</key>
+		<string>Modified</string>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/FC28C9EE-765C-442B-91D8-4B6D5D3BEB15.playgroundpage/UserManifest.plist</key>
+		<string>Added</string>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/FC28C9EE-765C-442B-91D8-4B6D5D3BEB15.playgroundpage/main.swift</key>
+		<string>Modified</string>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/UserManifest.plist</key>
+		<string>Added</string>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</key>
+		<string>Modified</string>
+		<key>Chapters/Chapter1.playgroundchapter/UserManifest.plist</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Bag.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Concept.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Constants.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Copula.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Evidence.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Extensions.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/FrequencyInterval.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Inference.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/NAL.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/NARS.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/TermLink.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/TruthValue.swift</key>
+		<string>Added</string>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Utility.swift</key>
+		<string>Added</string>
+		<key>UserModules/UserModule.playgroundmodule/Sources/SharedCode.swift</key>
+		<string>Removed</string>
 	</dict>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+	<key>UpdatedContentVersion</key>
+	<string>1.0</string>
 </dict>
 </plist>

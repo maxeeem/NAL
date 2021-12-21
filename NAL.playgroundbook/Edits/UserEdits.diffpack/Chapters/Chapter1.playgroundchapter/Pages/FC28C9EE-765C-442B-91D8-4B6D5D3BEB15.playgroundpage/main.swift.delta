@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>let bag = Bag&lt;TermLink&gt;()
+
+let bird = Term.word("bird")
+let robin = Term.word("robin")
+bag.put(TermLink(bird, 0.9))
+bag.put(TermLink(robin, 0.9))
+print(bag)
+var item = bag.get()
+print(item)
+print(bag)
+bag.put(item!)
+print(bag)
+item = bag.get("bird")
+print(item)
+print(bag)
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 273}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

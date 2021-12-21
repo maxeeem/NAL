@@ -38,21 +38,6 @@ extension Evidence {
     }
 }
 
-extension Evidence {
-    init(_ statement: Statement, knowledgeBase kb: KnowledgeBase) {
-        let extS = kb.extension(statement.subject)
-        let extP = kb.extension(statement.predicate)
-        let intS = kb.intension(statement.subject)
-        let intP = kb.intension(statement.predicate)
-        
-        let positive = extS.intersection(extP).count + intP.intersection(intS).count
-        let total = extS.count + intP.count
-        
-        self.init(positive, total)
-        //print("evidence:", self)
-    }
-}
-
 extension Evidence: CustomStringConvertible {
     var description: String {
         "(\(positive), \(total))"

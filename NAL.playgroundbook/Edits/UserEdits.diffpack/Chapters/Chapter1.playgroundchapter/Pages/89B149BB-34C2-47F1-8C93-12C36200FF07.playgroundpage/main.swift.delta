@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>let nars = NARS()
+
+//-----------
+
+let car = Term.word("car")
+let vehicle = Term.word("vehicle")
+let inheritance = Term.word("--&gt;")
+let carIsAVehicle = Term.compound(inheritance, [car, vehicle])
+let i = Term.word("SELF")
+let know = Term.word("know")
+let iKnowCarIsAVehicle = Term.compound(know, [i, carIsAVehicle])
+
+
+print("-----")
+//  printStatement(iKnowCarIsAVehicle)
+print(iKnowCarIsAVehicle)
+
+let x = Term.word("VAR#x")
+let y = Term.word("VAR#y")
+let z = Term.word("VAR#z")
+let cond = Term.word("if")
+let then = Term.word("then")
+let premise = Term.compound(
+    cond, 
+    [.compound(inheritance, [x, y]),
+    .compound(inheritance, [z, x])])
+let conclusion = Term.compound(inheritance, [z, y])
+
+
+let eval = Term.word("eval")
+
+
+/// deduction
+let rule = Term.compound(eval, [premise, conclusion])
+print(rule)
+
+let apply = Term.compound(rule, [carIsAVehicle, iKnowCarIsAVehicle])
+print(apply)
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 896}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

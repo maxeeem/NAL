@@ -1,16 +1,17 @@
+import Foundation
 
 public struct TruthValue {
     let frequency: Double 
     let confidence: Double
     
     public init(_ frequency: Double, _ confidence: Double) {
-        self.frequency = frequency
-        self.confidence = confidence
+        self.frequency = Double(round(10000 * frequency) / 10000)
+        self.confidence = Double(round(10000 * confidence) / 10000)
     }
     
     init(_ ev: Evidence) {
-        self.frequency = ev.frequency
-        self.confidence = ev.confidence
+        self.frequency = Double(round(10000 * ev.frequency) / 10000)
+        self.confidence = Double(round(10000 * ev.confidence) / 10000)
     }
 }
 
@@ -34,7 +35,7 @@ extension TruthValue {
 
 extension TruthValue: CustomStringConvertible {
     public var description: String {
-        "(\(frequency), \(confidence))"
+        "<\(frequency), \(confidence)>"
     }
 }
 

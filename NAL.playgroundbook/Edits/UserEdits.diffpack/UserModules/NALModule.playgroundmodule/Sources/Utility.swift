@@ -1,4 +1,21 @@
 
+extension Question: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .statement(let statement):
+            return "\(statement)"
+        default: 
+            return "\(self)"
+        }
+    }
+}
+
+extension Judgement: CustomStringConvertible {
+    public var description: String {
+        "\(statement)" + "\(truthValue)"
+    }
+}
+
 extension Statement: CustomStringConvertible {
     public var description: String {
         "\(subject) " + copula.rawValue + " \(predicate)"
@@ -10,31 +27,9 @@ extension Term: CustomStringConvertible {
         switch self {
         case .word(let word):
             return word
+        case .compound(let connector, let terms):
+            return "\(connector) \(terms)"
         }
-    }
-}
-
-public func print(_ knowledge: Set<String>) {
-    print("--")
-    for statement in knowledge {
-        print(statement)
-    }
-    print("--")
-}
-
-
-extension Statement {
-    public init(_ subject: Term, _ copula: Copula, _ predicate: Term) {
-        self.subject = subject
-        self.copula = copula
-        self.predicate = predicate
-    }
-}
-
-extension Judgement {
-    public init(_ statement: Statement, _ truthValue: TruthValue) {
-        self.statement = statement
-        self.truthValue = truthValue
     }
 }
 
@@ -51,4 +46,12 @@ public func and(_ xs: Double...) -> Double {
 
 public func or(_ xs: Double...) -> Double {
     1 - xs.reduce(1, { $0 * (1 - $1)})
+}
+
+
+
+extension Array where Element == Bool {
+    var allValid: Bool {
+        reduce(true, {$0 == $1} ) == true
+    }
 }
