@@ -1,3 +1,4 @@
+import NALModule
 
 public struct Concept: Item {
     public var identifier: String { term.description }
@@ -39,24 +40,13 @@ extension Concept {
     func answer(_ q: Question) -> [Judgement] {
         switch q {
         case .statement(let statement):
-            if let b = beliefs.get(statement.description) {
-                beliefs.put(b) // put back
-                return [b.judgement]
-            }
-            if let b = beliefs.get() {
-                beliefs.put(b) // put back
-                // all other rules // backwards inference
-                let j = Judgement(statement, TruthValue(1, 0.45))
-                return Concept.rules.compactMap { r in r(j, b.judgement) }
-            } else {
-                return [] // no results found
-            }
+            return answer(statement)
         
         case .general(let term, let copula):
             let winner = beliefs.items
                 .filter { b in
                     b.value.judgement.statement.subject == term &&
-                    b.value.judgement.statement.copula == copula
+                        b.value.judgement.statement.copula == copula
                 }.map { b in 
                     b.value.judgement 
                 }.max { j1, j2 in
@@ -69,7 +59,7 @@ extension Concept {
             let winner = beliefs.items
                 .filter { b in
                     b.value.judgement.statement.predicate == term &&
-                    b.value.judgement.statement.copula == copula
+                        b.value.judgement.statement.copula == copula
                 }.map { b in 
                     b.value.judgement 
                 }.max { j1, j2 in
@@ -80,10 +70,24 @@ extension Concept {
             
         }
     }
+    
+    func answer(_ s: Statement) -> [Judgement] {
+        if let b = beliefs.get(s.description) {
+            beliefs.put(b) // put back
+            return [b.judgement]
+        }
+        if let b = beliefs.get() {
+            beliefs.put(b) // put back
+            // all other rules // backwards inference
+            let j = Judgement(s, TruthValue(1, 0.45))
+            return Concept.rules.compactMap { r in r(j, b.judgement) }
+        }
+        return [] // no results found
+    }
 }
 
 extension Concept: CustomStringConvertible {
     public var description: String {
-        "\(term)".uppercased() + "\nTL \(termLinks)" + "BL \(beliefs)"
+        "\(term)".uppercased() + "\n.  \(termLinks)" + ".  \(beliefs)"
     }
 }

@@ -23,10 +23,3 @@ public func -->(_ subject: Term, predicate: String) -> Statement {
 public func -->(_ subject: String, predicate: String) -> Statement {
     Term.word(subject) --> Term.word(predicate)
 }
-
-//postfix operator -!
-//extension Statement {
-//    public static postfix func -!(_ s: Statement) -> Sentence {
-//        Sentence.question(Question(s)) // TODO: goal
-//    }
-//}

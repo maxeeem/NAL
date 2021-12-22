@@ -1,4 +1,4 @@
-
+import NALModule
 
 public struct TermLink: Item {
     public var identifier: String { term.description }

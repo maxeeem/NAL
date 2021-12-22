@@ -5,8 +5,8 @@ public enum Sentence {
 }
 
 public struct Judgement {
-    let statement: Statement
-    let truthValue: TruthValue
+    public let statement: Statement
+    public let truthValue: TruthValue
 }
 
 public enum Question {
@@ -16,9 +16,9 @@ public enum Question {
 }
 
 public struct Statement: Hashable {
-    let subject: Term
-    let copula: Copula
-    let predicate: Term
+    public let subject: Term
+    public let copula: Copula
+    public let predicate: Term
 }
 
 public enum Copula: String {

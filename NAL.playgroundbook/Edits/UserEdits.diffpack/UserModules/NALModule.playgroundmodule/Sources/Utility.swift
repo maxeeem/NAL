@@ -24,6 +24,24 @@ extension Statement: CustomStringConvertible {
     }
 }
 
+
+extension Sentence: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .judgement(let judgement):
+            return "\(judgement)"
+        case .question(let question):
+            switch question {
+            case .statement(_):
+                return "\(question)?"
+            default:
+                return "\(question)"
+            }
+            
+        }
+    }
+}
+
 extension Term: CustomStringConvertible {
     public var description: String {
         switch self {
@@ -36,24 +54,9 @@ extension Term: CustomStringConvertible {
 }
 
 
-/// Extended Boolean operators
-/// bounded by the range from 0 to 1
-public func not(_ x: Double) -> Double {
-    1 - x
-}
 
-public func and(_ xs: Double...) -> Double {
-    xs.reduce(1, { $0 * $1 })
-}
-
-public func or(_ xs: Double...) -> Double {
-    1 - xs.reduce(1, { $0 * (1 - $1)})
-}
-
-
-
-extension Array where Element == Bool {
-    var allValid: Bool {
-        reduce(true, {$0 == $1} ) == true
-    }
+public func debugPrint(_ item: Any, _ separator: String = "-------") {
+    print("\n"+separator+"\(type(of: item))"+separator+"\n")
+    print(item)
+    print("\n"+separator+"\n")
 }

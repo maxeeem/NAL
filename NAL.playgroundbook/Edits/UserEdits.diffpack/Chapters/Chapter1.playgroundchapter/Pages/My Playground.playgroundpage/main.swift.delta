@@ -6,12 +6,17 @@
 	<array>
 		<dict>
 			<key>ModifiedContent</key>
-			<string>let nars = NARS()
+			<string>/*
+ * each rock has a functionality
+ * @author Nicknames
+ */
 
-let robin = Term.word("robin")
-let bird = Term.word("bird")
-let animal = Term.word("animal")
-let mammal = Term.word("mammal")
+let nars = NARS()
+
+let robin: Term = .word("robin")
+let bird: Term = .word("bird")
+let animal: Term = .word("animal")
+let mammal: Term = .word("mammal")
     
 nars.process(
     ("bird" --&gt; "animal")-*,
@@ -22,9 +27,7 @@ nars.process(
     (bird --&gt; mammal)-?
 )
 
-print("\n-------MEM------\n")
-print(nars.memory)
-print("\n-------MEM------\n")
+debugPrint(nars.memory)
 
 nars.process(
     ("bird" --&gt; "?")-?,
@@ -36,7 +39,7 @@ nars.process(
  
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 497}</string>
+			<string>{1, 512}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

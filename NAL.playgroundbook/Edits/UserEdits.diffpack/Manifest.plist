@@ -28,12 +28,6 @@
 		<string>Modified</string>
 		<key>Chapters/Chapter1.playgroundchapter/UserManifest.plist</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Bag.swift</key>
-		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Belief.swift</key>
-		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Concept.swift</key>
-		<string>Added</string>
 		<key>UserModules/NALModule.playgroundmodule/Sources/Constants.swift</key>
 		<string>Added</string>
 		<key>UserModules/NALModule.playgroundmodule/Sources/Copula.swift</key>
@@ -46,15 +40,27 @@
 		<string>Added</string>
 		<key>UserModules/NALModule.playgroundmodule/Sources/Inference.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/NAL.swift</key>
+		<key>UserModules/NALModule.playgroundmodule/Sources/NALModule.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/NARS.swift</key>
-		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/TermLink.swift</key>
+		<key>UserModules/NALModule.playgroundmodule/Sources/Operators.swift</key>
 		<string>Added</string>
 		<key>UserModules/NALModule.playgroundmodule/Sources/TruthValue.swift</key>
 		<string>Added</string>
 		<key>UserModules/NALModule.playgroundmodule/Sources/Utility.swift</key>
+		<string>Added</string>
+		<key>UserModules/NARSModule.playgroundmodule/Sources/Bag.swift</key>
+		<string>Added</string>
+		<key>UserModules/NARSModule.playgroundmodule/Sources/Belief.swift</key>
+		<string>Added</string>
+		<key>UserModules/NARSModule.playgroundmodule/Sources/Concept.swift</key>
+		<string>Added</string>
+		<key>UserModules/NARSModule.playgroundmodule/Sources/Extensions.swift</key>
+		<string>Added</string>
+		<key>UserModules/NARSModule.playgroundmodule/Sources/Memory.swift</key>
+		<string>Added</string>
+		<key>UserModules/NARSModule.playgroundmodule/Sources/NARSModule.swift</key>
+		<string>Added</string>
+		<key>UserModules/NARSModule.playgroundmodule/Sources/TermLink.swift</key>
 		<string>Added</string>
 		<key>UserModules/UserModule.playgroundmodule/Sources/SharedCode.swift</key>
 		<string>Removed</string>

@@ -1,4 +1,3 @@
-import Foundation
 
 public protocol Item {
     var identifier: String { get }
@@ -53,7 +52,7 @@ public final class Bag<I: Item> {
     
     private func getLevel(_ item: I) -> Int {
         let fl = item.priority * Double(buckets.count)
-        let level = Int(ceil(fl) - 1)
+        let level = Int(fl.rounded(.down) - 1)
         return max(level, 0)
     }
     
@@ -99,4 +98,3 @@ extension Bag: CustomStringConvertible {
         return String(o.dropLast(3))
     }
 }
-

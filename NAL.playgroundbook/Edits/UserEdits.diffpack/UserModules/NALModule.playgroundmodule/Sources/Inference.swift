@@ -1,4 +1,16 @@
 
+/// Extended Boolean operators
+/// bounded by the range from 0 to 1
+public func not(_ x: Double) -> Double {
+    1 - x
+}
+public func and(_ xs: Double...) -> Double {
+    xs.reduce(1, { $0 * $1 })
+}
+public func or(_ xs: Double...) -> Double {
+    1 - xs.reduce(1, { $0 * (1 - $1)})
+}
+
 /// NAL-1
 public func revision(j1: Judgement, j2: Judgement) -> Judgement {
     let f1 = j1.truthValue.frequency
@@ -27,7 +39,7 @@ public func conversion(j1: Judgement) -> Judgement? {
     return Judgement(statement, truthValue)
 }
 
-// MARK: Auto-applied rules
+// MARK: Data-driven rules
 
 public func deduction(j1: Judgement, j2: Judgement) -> Judgement? {
     guard [ // assumptions

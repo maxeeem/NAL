@@ -1,4 +1,4 @@
-
+import NALModule
 
 public struct Belief: Item {
     public var identifier: String { judgement.statement.description }
