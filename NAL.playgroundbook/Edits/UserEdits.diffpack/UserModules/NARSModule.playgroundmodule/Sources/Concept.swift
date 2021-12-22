@@ -14,7 +14,9 @@ public struct Concept: Item {
 extension Concept {
     public typealias Rule = (Judgement, Judgement) -> Judgement?
     public static let rules: [Rule] = [deduction, induction, abduction, exemplification]
-    
+}
+
+extension Concept {
     // returns derived judgements if any
     func accept(_ j: Judgement, subject: Bool = true) -> [Judgement] {
         var judgement = j
@@ -41,37 +43,20 @@ extension Concept {
         switch q {
         case .statement(let statement):
             return answer(statement)
-        
         case .general(let term, let copula):
-            let winner = beliefs.items
-                .filter { b in
-                    b.value.judgement.statement.subject == term &&
-                        b.value.judgement.statement.copula == copula
-                }.map { b in 
-                    b.value.judgement 
-                }.max { j1, j2 in
-                    let choice = choice(j1: j1, j2: j2)
-                    return choice.statement == j2.statement
-                }
-            return winner != nil ? [winner!] : []
-            
+            return answer { s in 
+                s.subject == term && s.copula == copula
+            }
         case .special(let copula, let term):
-            let winner = beliefs.items
-                .filter { b in
-                    b.value.judgement.statement.predicate == term &&
-                        b.value.judgement.statement.copula == copula
-                }.map { b in 
-                    b.value.judgement 
-                }.max { j1, j2 in
-                    let choice = choice(j1: j1, j2: j2)
-                    return choice.statement == j2.statement
-                }
-            return winner != nil ? [winner!] : []
-            
+            return answer { s in 
+                s.predicate == term && s.copula == copula
+            }
         }
     }
     
-    func answer(_ s: Statement) -> [Judgement] {
+    // MARK: Private
+    
+    private func answer(_ s: Statement) -> [Judgement] {
         if let b = beliefs.get(s.description) {
             beliefs.put(b) // put back
             return [b.judgement]
@@ -79,10 +64,23 @@ extension Concept {
         if let b = beliefs.get() {
             beliefs.put(b) // put back
             // all other rules // backwards inference
-            let j = Judgement(s, TruthValue(1, 0.45))
+            let j = Judgement(s, TruthValue(1, 0.45)) // TODO: finish
             return Concept.rules.compactMap { r in r(j, b.judgement) }
         }
         return [] // no results found
+    }
+    
+    private func answer(_ f: (Statement) -> Bool) -> [Judgement] {
+        let winner = beliefs.items
+            .filter { b in
+                f(b.value.judgement.statement)
+            }.map { b in 
+                b.value.judgement 
+            }.max { j1, j2 in
+                let choice = choice(j1: j1, j2: j2)
+                return choice.statement == j2.statement
+            }
+        return winner != nil ? [winner!] : []
     }
 }
 

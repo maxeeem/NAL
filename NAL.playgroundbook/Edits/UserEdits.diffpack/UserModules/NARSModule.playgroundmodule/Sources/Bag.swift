@@ -1,9 +1,4 @@
 
-public protocol Item {
-    var identifier: String { get }
-    var priority: Double { get set }
-}
-
 public final class Bag<I: Item> {
     var buckets: [[I]]
     var items: [String: I] = [:]
@@ -95,6 +90,6 @@ extension Bag: CustomStringConvertible {
     public var description: String {
         let x = I.self == Concept.self ? "" : ".  "
         let o = items.values.reduce("", { $0 + "\($1)\n" + x })
-        return String(o.dropLast(3))
+        return String(o.dropLast(x.count))
     }
 }

@@ -18,6 +18,12 @@ let bird: Term = .word("bird")
 let animal: Term = .word("animal")
 let mammal: Term = .word("mammal")
     
+var history = [String]()
+nars.output = { s in
+    history.append(s)
+    print(s)
+}
+
 nars.process(
     ("bird" --&gt; "animal")-*,
     (robin --&gt; bird)-*,
@@ -36,10 +42,14 @@ nars.process(
 )
 
 
+// MARK: Tests
+
+assert(history == ["• bird –&gt; animal&lt;1.0, 0.9&gt;", "• robin –&gt; bird&lt;1.0, 0.9&gt;", ".  ⏱ animal –&gt; robin&lt;1.0, 0.4475&gt;", "• bird –&gt; animal?", ".  💡 bird –&gt; animal&lt;1.0, 0.9&gt;", "• bird –&gt; mammal?", ".  ⏱ robin –&gt; mammal&lt;1.0, 0.405&gt;", ".  ⏱ bird –&gt; mammal&lt;1.0, 0.2671&gt;", ".  ⏱ bird –&gt; mammal?", ".  💡 bird –&gt; mammal&lt;1.0, 0.2671&gt;", "• bird –&gt; mammal&lt;0.0, 0.9&gt;", ".  ⏱ robin –&gt; mammal&lt;0.0389, 0.0316&gt;", ".  ⏱ robin –&gt; bird&lt;1.0, 0.014&gt;", "• bird –&gt; mammal?", ".  💡 bird –&gt; mammal&lt;0.0389, 0.9035&gt;", "• bird –&gt; ?", ".  💡 bird –&gt; animal&lt;1.0, 0.9&gt;", "• ? –&gt; mammal", ".  💡 robin –&gt; mammal&lt;0.956, 0.4163&gt;", "• ? –&gt; ?", "\tI don\'t know 🤷‍♂️"])
+
  
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 512}</string>
+			<string>{1, 1246}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

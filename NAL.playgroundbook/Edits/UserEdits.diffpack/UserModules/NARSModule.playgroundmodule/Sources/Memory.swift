@@ -1,36 +1,39 @@
 import NALModule
 
 extension Bag where I == Concept {
-    public func derive(_ judgement: Judgement) -> [Judgement] {
-        var derivedJudgements = [Judgement]()
-        
-        let subject = judgement.statement.subject
-        let subjectConcept = get(subject.description) ?? Concept(term: subject)
-        derivedJudgements += subjectConcept.accept(judgement)
+    func consider(_ j: Judgement) -> [Judgement] {
+        consider(j.statement) { c in 
+            c.accept(j, subject: c.term == j.statement.subject)
+        }
+    }
+    
+    func consider(_ q: Question) -> [Judgement] {
+        if case .statement(let statement) = q {
+            return consider(statement) { c in c.answer(q) }
+        } else {
+            return consider(q.variableTerm) { c in c.answer(q) }
+        }
+    }
+    
+    // MARK: Private
+    
+    private func consider(_ s: Statement, _ f: (Concept) -> [Judgement]) -> [Judgement] {
+        var derivedJudgements: [Judgement] = []
+        // TODO: consider overall concept
+        // let overallConcept = get(s.description) ?? Concept(term: s)
+        let subjectConcept = get(s.subject.description) ?? Concept(term: s.subject)
+        let predicateConcept = get(s.predicate.description) ?? Concept(term: s.predicate)
+        derivedJudgements += f(subjectConcept) 
+        derivedJudgements += f(predicateConcept)
         put(subjectConcept)
-        
-        let predicate = judgement.statement.predicate
-        let predicateConcept = get(predicate.description) ?? Concept(term: predicate)
-        derivedJudgements += predicateConcept.accept(judgement, subject: false)
         put(predicateConcept)
-        
         return derivedJudgements
     }
     
-    public func derive(_ statement: Statement) -> [Judgement] {
-        var derivedJudgements: [Judgement] = []
-        
-        let subject = statement.subject
-        let predicate = statement.predicate
-        
-        let subjectConcept = get(subject.description) ?? Concept(term: subject)
-        derivedJudgements += subjectConcept.answer(Question(statement))
-        put(subjectConcept)
-        
-        let predicateConcept = get(predicate.description) ?? Concept(term: predicate)
-        derivedJudgements += predicateConcept.answer(Question(statement))
-        put(predicateConcept)
-        
-        return derivedJudgements
+    private func consider(_ t: Term, _ f: (Concept) -> [Judgement]) -> [Judgement] {
+        guard let concept = get(t.description) else { return [] }
+        defer { put(concept) } // put back
+        return f(concept)
     }
 }
+

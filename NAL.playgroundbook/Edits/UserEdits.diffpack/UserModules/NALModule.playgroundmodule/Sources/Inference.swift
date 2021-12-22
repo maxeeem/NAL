@@ -35,7 +35,7 @@ public func conversion(j1: Judgement) -> Judgement? {
         return nil // N/A
     }
     let truthValue = TruthValue.conversion(j1.truthValue)
-    let statement = Copula.inheritance.makeStatement(j1.statement.predicate, j1.statement.subject)
+    let statement = (j1.statement.predicate --> j1.statement.subject)
     return Judgement(statement, truthValue)
 }
 
@@ -50,7 +50,7 @@ public func deduction(j1: Judgement, j2: Judgement) -> Judgement? {
         return nil // N/A
     }
     let truthValue = TruthValue.deduction(j1.truthValue, j2.truthValue)
-    let statement = Copula.inheritance.makeStatement(j2.statement.subject, j1.statement.predicate)
+    let statement = (j2.statement.subject --> j1.statement.predicate)
     return Judgement(statement, truthValue)
 }
 
@@ -63,7 +63,7 @@ public func induction(j1: Judgement, j2: Judgement) -> Judgement? {
         return nil // N/A
     }
     let truthValue = TruthValue.induction(j1.truthValue, j2.truthValue)
-    let statement = Copula.inheritance.makeStatement(j2.statement.predicate, j1.statement.predicate)
+    let statement = (j2.statement.predicate --> j1.statement.predicate)
     return Judgement(statement, truthValue)
 }
 
@@ -76,7 +76,7 @@ public func abduction(j1: Judgement, j2: Judgement) -> Judgement? {
         return nil // N/A
     }
     let truthValue = TruthValue.abduction(j1.truthValue, j2.truthValue)
-    let statement = Copula.inheritance.makeStatement(j2.statement.subject, j1.statement.subject)
+    let statement = (j2.statement.subject --> j1.statement.subject)
     return Judgement(statement, truthValue)
 }
 
@@ -89,6 +89,6 @@ public func exemplification(j1: Judgement, j2: Judgement) -> Judgement? {
         return nil // N/A
     }
     let truthValue = TruthValue.exemplification(j1.truthValue, j2.truthValue)
-    let statement = Copula.inheritance.makeStatement(j2.statement.predicate, j1.statement.subject)
+    let statement = (j2.statement.predicate --> j1.statement.subject)
     return Judgement(statement, truthValue)
 }
