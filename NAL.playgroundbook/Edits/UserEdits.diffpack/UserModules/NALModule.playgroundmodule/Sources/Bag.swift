@@ -94,6 +94,9 @@ public final class Bag<I: Item> {
 
 extension Bag: CustomStringConvertible {
     public var description: String {
-        "\(items)"
+        let x = I.self == Concept.self ? "" : ".  "
+        let o = items.values.reduce("", { $0 + "\($1)\n" + x })
+        return String(o.dropLast(3))
     }
 }
+

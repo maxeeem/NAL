@@ -4,8 +4,10 @@ extension Question: CustomStringConvertible {
         switch self {
         case .statement(let statement):
             return "\(statement)"
-        default: 
-            return "\(self)"
+        case .general(let term, let copula):
+            return "\(term) \(copula.rawValue) ?"
+        case .special(let copula, let term):
+            return "? \(copula.rawValue) \(term)"
         }
     }
 }

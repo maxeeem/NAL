@@ -22,21 +22,21 @@ nars.process(
     (bird --&gt; mammal)-?
 )
 
-print("\n-------\n\n", nars.memory)
- 
-/*
-// substitution
-kb.query("bird --&gt; ?")
-kb.query("? --&gt; animal")
+print("\n-------MEM------\n")
+print(nars.memory)
+print("\n-------MEM------\n")
 
-let q1 = Question.general(Term.word("bird"), .inheritance)
-let q2 = Question.special(.inheritance, Term.word("animal"))
-kb.query(q1)
-kb.query(q2)
- */
+nars.process(
+    ("bird" --&gt; "?")-?,
+    ("?" --&gt; mammal)-?,
+    ("?" --&gt; "?")-?
+)
+
+
+ 
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 585}</string>
+			<string>{1, 497}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

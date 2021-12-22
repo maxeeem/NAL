@@ -14,20 +14,7 @@ public final class NARS {
         print(">", recurse && userInitiated ? "" : " -", input)
         switch input {
         case .judgement(let judgement): // bird --> animal <1, 0.9>
-            let subject = judgement.statement.subject // bird
-            let predicate = judgement.statement.predicate // animal
-            
-            var derivedJudgements: [Judgement] = []
-            
-            let subjectConcept = memory.get(subject.description) ?? Concept(term: subject)
-            subjectConcept.accept(judgement)
-                .forEach { j in derivedJudgements.append(j) }
-            memory.put(subjectConcept)
-            
-            let predicateConcept = memory.get(predicate.description) ?? Concept(term: predicate)
-            predicateConcept.accept(judgement, subject: false)
-                .forEach { j in derivedJudgements.append(j) }
-            memory.put(predicateConcept)
+            let derivedJudgements = memory.derive(judgement)
             
             if recurse { // TODO: add levels
                 //print(">>>>+")
@@ -56,7 +43,7 @@ public final class NARS {
                 memory.put(predicateConcept)
                 
                 if derivedJudgements.first?.statement == statement {
-                    print("A:", derivedJudgements.first!)
+                    print("\t", derivedJudgements.first!)
                 } else if recurse {
                     derivedJudgements.forEach { j in process(.judgement(j), recurse: true, userInitiated: false) }
                     // re-process question
@@ -64,10 +51,28 @@ public final class NARS {
                 }
                 
             case .general(let term, let copula):
-                print(question)
+                guard let concept = memory.get(term.description) else {
+                    print("\t I don't know")
+                    return
+                }
+                defer {
+                    memory.put(concept) // put back
+                }
+                let winner = concept.answer(question).first
+                print("\t", winner ?? "🤷‍♂️")
+                
             case .special(let copula, let term):
-                print(question )
+                guard let concept = memory.get(term.description) else {
+                    print("\t I don't know")
+                    return
+                }
+                defer {
+                    memory.put(concept) // put back
+                }
+                let winner = concept.answer(question).first
+                print("\t", winner ?? "🤷‍♂️")
             }
         }
     }
 }
+

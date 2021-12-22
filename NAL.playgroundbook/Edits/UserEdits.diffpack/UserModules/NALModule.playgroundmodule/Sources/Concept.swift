@@ -20,7 +20,7 @@ extension Concept {
         defer {
             beliefs.put(Belief(judgement, 0.9))
         }
-        let term = subject ? j.statement.subject : j.statement.predicate
+        let term = subject ? j.statement.predicate : j.statement.subject
         termLinks.put(TermLink(term, 0.9))
         /// apply rules
         if let b = beliefs.get(j.statement.description) {
@@ -48,15 +48,42 @@ extension Concept {
                 // all other rules // backwards inference
                 let j = Judgement(statement, TruthValue(1, 0.45))
                 return Concept.rules.compactMap { r in r(j, b.judgement) }
+            } else {
+                return [] // no results found
             }
-        default: break
+        
+        case .general(let term, let copula):
+            let winner = beliefs.items
+                .filter { b in
+                    b.value.judgement.statement.subject == term &&
+                    b.value.judgement.statement.copula == copula
+                }.map { b in 
+                    b.value.judgement 
+                }.max { j1, j2 in
+                    let choice = choice(j1: j1, j2: j2)
+                    return choice.statement == j2.statement
+                }
+            return winner != nil ? [winner!] : []
+            
+        case .special(let copula, let term):
+            let winner = beliefs.items
+                .filter { b in
+                    b.value.judgement.statement.predicate == term &&
+                    b.value.judgement.statement.copula == copula
+                }.map { b in 
+                    b.value.judgement 
+                }.max { j1, j2 in
+                    let choice = choice(j1: j1, j2: j2)
+                    return choice.statement == j2.statement
+                }
+            return winner != nil ? [winner!] : []
+            
         }
-        return [] // no results found
     }
 }
 
 extension Concept: CustomStringConvertible {
     public var description: String {
-        "\nT \(termLinks)\n" + "B \(beliefs)\n\n"
+        "\(term)".uppercased() + "\nTL \(termLinks)" + "BL \(beliefs)"
     }
 }
