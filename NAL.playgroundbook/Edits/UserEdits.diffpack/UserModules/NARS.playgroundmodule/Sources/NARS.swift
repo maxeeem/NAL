@@ -1,4 +1,4 @@
-import NALModule
+import NAL
 
 public final class NARS {
     public let memory = Bag<Concept>()

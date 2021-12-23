@@ -11,12 +11,12 @@
  * @author Nicknames
  */
 
-let nars = NARS()
+let nars = NARS() // Quine ( translates between Swift and Narsese )
 
-let robin: Term = .word("robin")
-let bird: Term = .word("bird")
-let animal: Term = .word("animal")
-let mammal: Term = .word("mammal")
+let robin = Term.word("robin")
+let bird = Term.word("bird")
+let animal = Term.word("animal")
+let mammal = Term.word("mammal")
     
 var history = [String]()
 nars.output = { s in
@@ -25,7 +25,7 @@ nars.output = { s in
 }
 
 nars.process(
-    ("bird" --&gt; "animal")-*,
+    ("bird" --&gt; "animal")-*, //(1, .9)
     (robin --&gt; bird)-*,
     (bird --&gt; animal)-?,
     (bird --&gt; "mammal")-?,
@@ -41,6 +41,8 @@ nars.process(
     ("?" --&gt; "?")-?
 )
 
+//print(mammal.swift) // experimental
+
 
 // MARK: Tests
 
@@ -49,7 +51,7 @@ assert(history == ["• bird –&gt; animal&lt;1.0, 0.9&gt;", "• robin –&gt;
  
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1246}</string>
+			<string>{1, 1337}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

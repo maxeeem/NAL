@@ -5,22 +5,16 @@ public extension Copula {
     }
 }
 
-
-precedencegroup StatementComposition { higherThan: SentenceComposition }
-infix operator --> : StatementComposition
-
+infix operator -->
 public func -->(_ subject: Term, predicate: Term) -> Statement {
     Copula.inheritance.makeStatement(subject, predicate)
 }
-
 public func -->(_ subject: String, predicate: Term) -> Statement {
     Term.word(subject) --> predicate
 }
-
 public func -->(_ subject: Term, predicate: String) -> Statement {
     subject --> Term.word(predicate)
 }
-
 public func -->(_ subject: String, predicate: String) -> Statement {
     Term.word(subject) --> Term.word(predicate)
 }

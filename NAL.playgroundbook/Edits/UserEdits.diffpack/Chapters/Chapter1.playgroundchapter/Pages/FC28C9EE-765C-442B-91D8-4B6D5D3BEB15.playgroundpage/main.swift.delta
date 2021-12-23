@@ -8,8 +8,10 @@
 	<array>
 		<dict>
 			<key>ModifiedContent</key>
-			<string>let bag = Bag&lt;TermLink&gt;()
-
+			<string>print(
+    "//----------- Test Storage\n"
+)
+let bag = Bag&lt;TermLink&gt;()
 let bird = Term.word("bird")
 let robin = Term.word("robin")
 bag.put(TermLink(bird, 0.9))
@@ -23,13 +25,82 @@ print(bag)
 item = bag.get("bird")
 print(item)
 print(bag)
+print(
+    "//----------- Test Logic\n"
+)
+print(not(0.3)) // 0.7
+print(rounded(and(0.2, 0.4))) // 0.08
+print(or(0.2, 0.4)) // 0.52
+let j1: Judgement = ("robin" --&gt; "bird")-*(1.0, 0.8)
+let j2: Judgement = ("penguin" --&gt; "bird") -* (0.9, 0.9)
+print(
+    "\n------choice\n",
+    choice(j1: j1, j2: j2)
+) // robin
+let j3: Judgement = ("bird"--&gt;"animal")-*(1, 0.9)
+let j4: Judgement = ("robin"--&gt;"bird")-*(1, 0.9)
+print(
+    "------deduction\n",
+    deduction(j1: j3, j2: j4)!
+) // robin--&gt;animal&lt;1,0.81&gt;
+let j5: Judgement = ("robin" --&gt; "animal") -* (1.0, 0.9)
+let j6: Judgement = ("robin" --&gt; "bird")-*(1.0, 0.9)
+print(
+    "------induction\n",
+    induction(j1: j5, j2: j6)!
+) // bird--&gt;animal&lt;1,0.45&gt;
+let j7: Judgement = ("bird"--&gt;"animal")-*(1.0, 0.9)
+let j8: Judgement = ("robin"--&gt;"animal")-*(1.0, 0.9)
+print(
+    "------abduction\n",
+    abduction(j1: j7, j2: j8)!
+) // robin--&gt;bird&lt;1,0.45&gt;
+let j9: Judgement = ("robin"--&gt;"bird")-*(1.0, 0.9)
+let j10: Judgement = ("bird"--&gt;"animal")-*(1.0, 0.9)
+print(
+    "------exemplification\n",
+    exemplification(j1: j9, j2: j10)!, "\n"
+) // animal--&gt;robin&lt;1,0.45&gt;
+print(
+    "//----------- Experimental\n"
+)
+let car = Term.word("car")
+let vehicle = Term.word("vehicle")
+let inheritance = Term.word("--&gt;")
+let carIsAVehicle = Term.compound(inheritance, [car, vehicle])
+let i = Term.word("SELF")
+let know = Term.word("know")
+let iKnowCarIsAVehicle = Term.compound(know, [i, carIsAVehicle])
+print(
+    "-----",
+    iKnowCarIsAVehicle
+)
+let x = Term.word("VAR#x")
+let y = Term.word("VAR#y")
+let z = Term.word("VAR#z")
+let cond = Term.word("if")
+let then = Term.word("then")
+let premise = Term.compound(
+    cond, 
+    [.compound(inheritance, [x, y]),
+     .compound(inheritance, [z, x])])
+let conclusion = Term.compound(inheritance, [z, y])
+let eval = Term.word("eval")
+(
+    /// deduction
+)
+let rule = Term.compound(eval, [premise, conclusion])
+print(rule)
+let apply = Term.compound(rule, [carIsAVehicle, iKnowCarIsAVehicle])
+print(apply)
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 273}</string>
+			<string>{0, 2296}</string>
 			<key>OriginalContent</key>
-			<string></string>
+			<string>
+</string>
 			<key>OriginalRange</key>
-			<string>{1, 0}</string>
+			<string>{0, 1}</string>
 		</dict>
 	</array>
 	<key>FormatVersion</key>

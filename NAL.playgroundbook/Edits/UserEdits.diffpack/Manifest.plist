@@ -10,14 +10,6 @@
 	<string>PlaygroundBookUserEdit</string>
 	<key>Diffs</key>
 	<dict>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/156DE8C9-F05A-4E71-A66E-67B3FDC4BD90.playgroundpage/UserManifest.plist</key>
-		<string>Added</string>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/156DE8C9-F05A-4E71-A66E-67B3FDC4BD90.playgroundpage/main.swift</key>
-		<string>Modified</string>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/89B149BB-34C2-47F1-8C93-12C36200FF07.playgroundpage/UserManifest.plist</key>
-		<string>Added</string>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/89B149BB-34C2-47F1-8C93-12C36200FF07.playgroundpage/main.swift</key>
-		<string>Modified</string>
 		<key>Chapters/Chapter1.playgroundchapter/Pages/FC28C9EE-765C-442B-91D8-4B6D5D3BEB15.playgroundpage/UserManifest.plist</key>
 		<string>Added</string>
 		<key>Chapters/Chapter1.playgroundchapter/Pages/FC28C9EE-765C-442B-91D8-4B6D5D3BEB15.playgroundpage/main.swift</key>
@@ -28,31 +20,31 @@
 		<string>Modified</string>
 		<key>Chapters/Chapter1.playgroundchapter/UserManifest.plist</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Constants.swift</key>
+		<key>UserModules/NAL.playgroundmodule/Sources/Constants.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Copula.swift</key>
+		<key>UserModules/NAL.playgroundmodule/Sources/Copula.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Evidence.swift</key>
+		<key>UserModules/NAL.playgroundmodule/Sources/Inference.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Inference.swift</key>
+		<key>UserModules/NAL.playgroundmodule/Sources/Narsese.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/NALModule.swift</key>
+		<key>UserModules/NAL.playgroundmodule/Sources/Truth.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/TruthValue.swift</key>
+		<key>UserModules/NAL.playgroundmodule/Sources/Utility.swift</key>
 		<string>Added</string>
-		<key>UserModules/NALModule.playgroundmodule/Sources/Utility.swift</key>
+		<key>UserModules/NARS.playgroundmodule/Sources/Bag.swift</key>
 		<string>Added</string>
-		<key>UserModules/NARSModule.playgroundmodule/Sources/Bag.swift</key>
+		<key>UserModules/NARS.playgroundmodule/Sources/Concept.swift</key>
 		<string>Added</string>
-		<key>UserModules/NARSModule.playgroundmodule/Sources/Concept.swift</key>
+		<key>UserModules/NARS.playgroundmodule/Sources/Item.swift</key>
 		<string>Added</string>
-		<key>UserModules/NARSModule.playgroundmodule/Sources/Item.swift</key>
+		<key>UserModules/NARS.playgroundmodule/Sources/Memory.swift</key>
 		<string>Added</string>
-		<key>UserModules/NARSModule.playgroundmodule/Sources/Memory.swift</key>
+		<key>UserModules/NARS.playgroundmodule/Sources/NARS.swift</key>
 		<string>Added</string>
-		<key>UserModules/NARSModule.playgroundmodule/Sources/NARSModule.swift</key>
+		<key>UserModules/NARS.playgroundmodule/Sources/Sentence.swift</key>
 		<string>Added</string>
-		<key>UserModules/NARSModule.playgroundmodule/Sources/Utility.swift</key>
+		<key>UserModules/NARS.playgroundmodule/Sources/Utility.swift</key>
 		<string>Added</string>
 		<key>UserModules/UserModule.playgroundmodule/Sources/SharedCode.swift</key>
 		<string>Removed</string>

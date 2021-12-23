@@ -2,42 +2,7 @@
 public struct TruthValue {
     let frequency: Double 
     let confidence: Double
-    
-    public init(_ frequency: Double, _ confidence: Double) {
-        self.frequency = rounded(frequency)
-        self.confidence = rounded(confidence)
-    }
-    
-    init(_ ev: Evidence) {
-        self.frequency = rounded(ev.frequency)
-        self.confidence = rounded(ev.confidence)
-    }
 }
-
-extension TruthValue {
-    var positiveEvidence: Double {
-        Double(evidentialHorizon) * frequency * confidence / (1 - confidence)
-    }
-    var totalEvidence: Double {
-        Double(evidentialHorizon) * confidence / (1 - confidence)
-    }
-    var lowerFrequency: Double {
-        frequency * confidence
-    }
-    var upperFrequency: Double {
-        1 - confidence * (1 - frequency)
-    }
-    var expectation: Double {
-        (lowerFrequency + upperFrequency) / 2
-    }
-}
-
-extension TruthValue: CustomStringConvertible {
-    public var description: String {
-        "<\(frequency), \(confidence)>"
-    }
-}
-
 
 extension TruthValue {
     static func conversion(_ tv1: TruthValue) -> TruthValue {

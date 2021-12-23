@@ -1,4 +1,4 @@
-import NALModule
+import NAL
 
 public struct Concept: Item {
     public var identifier: String { term.description }
@@ -84,8 +84,3 @@ extension Concept {
     }
 }
 
-extension Concept: CustomStringConvertible {
-    public var description: String {
-        "\(term)".uppercased() + "\n.  \(termLinks)" + ".  \(beliefs)"
-    }
-}

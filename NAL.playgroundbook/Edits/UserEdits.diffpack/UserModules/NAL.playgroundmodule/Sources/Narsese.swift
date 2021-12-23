@@ -1,9 +1,4 @@
 
-public enum Sentence {
-    case judgement(Judgement)
-    case question(Question)
-}
-
 public struct Judgement {
     public let statement: Statement
     public let truthValue: TruthValue
@@ -45,6 +40,3 @@ public indirect enum Term: Hashable {
     
     case compound(Term, [Term])
 }
-
-
-

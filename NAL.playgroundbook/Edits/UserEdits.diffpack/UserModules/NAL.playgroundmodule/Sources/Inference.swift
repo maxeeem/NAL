@@ -19,7 +19,7 @@ public func revision(j1: Judgement, j2: Judgement) -> Judgement {
     let c2 = j2.truthValue.confidence
     let f = ((f1 * c1) * (1 - c2) + (f2 * c2) * (1 - c1)) / (c1 * (1 - c2) + c2 * (1 - c1))
     let c = (c1 * (1 - c2) + c2 * (1 - c1)) / (c1 * (1 - c2) + c2 * (1 - c1) + (1 - c1) * (1 - c2))
-    return j1.statement -* (f,c)
+    return Judgement(j1.statement, TruthValue(f, c))
 }
 
 public func choice(j1: Judgement, j2: Judgement) -> Judgement {
