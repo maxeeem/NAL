@@ -103,7 +103,7 @@ extension Concept {
                 let choice = choice(j1: j1, j2: j2)
                 return choice.statement == j2.statement
             }
-        return winner != nil ? [winner!] : []
+        return winner == nil ? [] : [winner!]
     }
 }
 

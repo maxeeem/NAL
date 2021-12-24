@@ -96,6 +96,15 @@ extension Copula {
 
 extension Term {
     var copula: Copula? { Copula(rawValue: description) }
+    var statement: Statement? {
+        switch self {
+        case .word:
+            return nil
+        case .compound(let connector, let terms):
+            // TODO: perform additional checks for number of terms and their types
+            return Copula(rawValue: connector.description)?.makeStatement(terms[0], terms[1])
+        }
+    }
 }
 
 let car = Term.word("car")
@@ -132,7 +141,7 @@ let apply = Term.compound(rule, [carIsAVehicle, iKnowCarIsAVehicle])
 print(apply)
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 3145}</string>
+			<string>{0, 3485}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>
