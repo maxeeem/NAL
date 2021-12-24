@@ -16,6 +16,7 @@ extension Bag where I == Concept {
 }
 
 // MARK: Private
+
 extension Bag where I == Concept {
     private func consider(_ s: Statement, _ f: (Concept) -> [Judgement]) -> [Judgement] {
         var derivedJudgements = [Judgement]()

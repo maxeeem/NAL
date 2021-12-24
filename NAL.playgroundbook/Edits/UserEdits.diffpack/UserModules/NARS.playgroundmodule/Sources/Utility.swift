@@ -107,61 +107,30 @@ extension Belief: CustomStringConvertible {
     }
 }
 
-
-// military uses made up language to teach their staff
-// use it to teach nars
-
-// pseudo code for Narsese -> Swift compiler
-// transform narsese Sentence into a valid Swift string
-// terms become variables: `car` -> `let car = Term.word("car")`
-extension Term {
-    public var swift: String {
-        var id = ""
+extension Sentence: CustomStringConvertible {
+    public var description: String {
         switch self {
-        case .word:
-            id = ".word"
-        case .compound:
-            id = ".compound"
-        }
-        return "`let \(description) = \(type(of: self))\(id)(\"\(description)\")"
-    }
-    public var compoundStatement: Statement? {
-        switch self {
-        case .word: return nil
-        case .compound(let connector, let terms):
-            if terms.count == 2, let copula = Copula(rawValue: connector.description) {
-                return copula.makeStatement(terms[0], terms[1])
-            } else {
-                return nil
+        case .judgement(let judgement):
+            return "\(judgement)"
+        case .question(let question):
+            switch question {
+            case .statement(_):
+                return "\(question)?"
+            default:
+                return "\(question)"
             }
+            
         }
     }
 }
 
-import Foundation
-extension Term {
-    public init?(s: String) {
-        let words = s.components(separatedBy: " ")
-        if words.count == 3, let copula = Copula(rawValue: words[1]), let t1 = Term(s: words[0]), let t2 = Term(s: words[2]) {
-            self = .compound(copula.term, [t1, t2])
-        } else if words.count > 1, let connector = Connector(rawValue: words[0]) {
-            let terms = words.dropFirst().compactMap(Term.init(s:))
-            if !terms.isEmpty {
-                self = .compound(connector.term, terms)
-            } else {
-                return nil
-            }
-        } else if words.count == 1, Copula(rawValue: words[0]) == nil {
-            self = .word(words[0])
-        } else {
-            return nil
-        }
+extension Bag: CustomStringConvertible {
+    public var description: String {
+        let x = I.self == Concept.self ? "" : ".  "
+        let o = items.values.reduce("", { $0 + "\($1)\n" + x })
+        return String(o.dropLast(x.count))
     }
-    var copula: Copula? { Copula(rawValue: description) }
 }
-extension Copula {
-    var term: Term { Term.word(rawValue) }
-}
-extension Connector {
-    var term: Term! { Term.word(rawValue) }
-}
+
+
+

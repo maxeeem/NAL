@@ -41,15 +41,6 @@ nars.process(
 
 debugPrint(nars.memory)
 
-// experimental
-print("Swift: ", mammal.swift) 
-let compound = Term.compound(.word(Copula.inheritance.rawValue), [bird, animal])
-print("Swift: ", compound.swift)
-let reproduced = Term(s: compound.description)
-print("Swift: ", reproduced == compound)
-print("Swift: ", reproduced?.compoundStatement)
-
-
 // MARK: Tests
 // print(history)
 assert(history == ["• bird -&gt; animal&lt;1.0, 0.9&gt;", "• robin -&gt; bird&lt;1.0, 0.9&gt;", ".  ⏱ animal -&gt; robin&lt;1.0, 0.4475&gt;", "• bird -&gt; animal?", ".  💡 bird -&gt; animal&lt;1.0, 0.9&gt;", "• bird -&gt; mammal?", ".  ⏱ robin -&gt; mammal&lt;1.0, 0.405&gt;", ".  ⏱ bird -&gt; mammal&lt;1.0, 0.2671&gt;", ".  ⏱ bird -&gt; mammal?", ".  💡 bird -&gt; mammal&lt;1.0, 0.2671&gt;", "• bird -&gt; mammal&lt;0.0, 0.9&gt;", ".  ⏱ robin -&gt; mammal&lt;0.0389, 0.0316&gt;", ".  ⏱ robin -&gt; bird&lt;1.0, 0.014&gt;", "• bird -&gt; mammal?", ".  💡 bird -&gt; mammal&lt;0.0389, 0.9035&gt;", "• bird -&gt; ?", ".  💡 bird -&gt; animal&lt;1.0, 0.9&gt;", "• ? -&gt; mammal", ".  💡 robin -&gt; mammal&lt;0.956, 0.4163&gt;", "• ? -&gt; ?", "\tI don\'t know 🤷‍♂️"])
@@ -57,7 +48,7 @@ assert(history == ["• bird -&gt; animal&lt;1.0, 0.9&gt;", "• robin -&gt; bir
  
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1683}</string>
+			<string>{1, 1383}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

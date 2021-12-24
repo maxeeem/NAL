@@ -2,7 +2,6 @@
 
 
 
-
 /// Swift Tuple is a basic primitive
 typealias Triple = (Bool?, Bool?, Bool?)
 typealias Quad = (Bool?, Bool?, Bool?, Bool?)
@@ -17,18 +16,18 @@ public typealias Result = (conclusion: Statement, (Int, Int))?
 
 public typealias Terms = (Term, Term, Term, Term)
 
-func +(_ a: (Term, Term), b: (Term, Term)) -> (Term, Term, Term, Term) {
+func +(_ a: (Term, Term), b: (Term, Term)) -> Terms {
     (a.0, a.1, b.0, b.1)
 }
 
-func firstIndex(of t: Term, in q: (Term, Term, Term, Term)) -> Int? {
+func firstIndex(of t: Term, in q: Terms) -> Int? {
     (q.0 == t ? 0 : 
         (q.1 == t ? 1 : 
             (q.2 == t ? 2 : 
                 (q.3 == t ? 3 : nil))))
 }
 
-func term(at i: Int, in q: (Term, Term, Term, Term)) -> Term? {
+func term(at i: Int, in q: Terms) -> Term? {
     (i == 0 ? q.0 : 
         (i == 1 ? q.1 : 
             (i == 2 ? q.2 :
@@ -48,6 +47,7 @@ let rule_generator: Apply = { (arg) -> (Dual) -> Result in
     let commonTerms = identifyCommonTerms((p1, p2))
     // TODO: validate there is at least two true
     //       validate that not all are true
+    //       validate copulas
     //       create statements from copula
     return { (arg) in
         let (t1, t2) = arg
@@ -60,7 +60,7 @@ let rule_generator: Apply = { (arg) -> (Dual) -> Result in
             let subject = firstIndex(of: c.subject, in: terms)!
             let predicate = firstIndex(of: c.predicate, in: terms)!
             terms = t1.terms + t2.terms
-            let statement = term(at: subject, in: terms)! --> term(at: predicate, in: terms)!
+            let statement = c.copula.makeStatement(term(at: subject, in: terms)!, term(at: predicate, in: terms)!)
             let tuple = (statement, (subject, predicate)) 
             return tuple
         }
@@ -96,7 +96,6 @@ var identifyCommonTerms: (Dual) -> Quad = { (arg) in
             }
             if i == 3 { helper(i, t) }
     }
-    
     func helper(_ i: Int, _ t: Term) -> Bool {
         if tmp.contains(t) {
             if let idx = firstIndex(of: t, in: res) {

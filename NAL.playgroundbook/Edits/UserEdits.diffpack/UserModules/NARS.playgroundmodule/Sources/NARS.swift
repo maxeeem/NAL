@@ -1,5 +1,10 @@
 import NAL
 
+public enum Sentence {
+    case judgement(Judgement)
+    case question(Question)
+}
+
 public final class NARS {
     public let memory = Bag<Concept>()
     public var output: (String) -> Void
@@ -11,9 +16,11 @@ public final class NARS {
     public func process(_ input: Sentence...) {
         input.forEach { s in process(s, userInitiated: true) }
     }
-    
-    // MARK: Private
-    
+}
+
+// MARK: Private
+
+extension NARS {
     private func process(_ input: Sentence, recurse: Bool = true, userInitiated: Bool = false) {
         output((userInitiated ? "•" : ".") + (recurse && userInitiated ? "" : "  ⏱") + " \(input)")
         switch input {
