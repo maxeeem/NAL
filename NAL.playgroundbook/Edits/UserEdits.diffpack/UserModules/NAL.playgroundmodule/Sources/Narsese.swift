@@ -16,16 +16,6 @@ public struct Statement: Hashable {
     public let predicate: Term
 }
 
-public enum Copula: String {
-    case inheritance = "->" 
-    case similarity  = "<–>"
-    case implication = "=>"
-    case equivalence = "<=>"
-    case instance = "•–>"  
-    case property = "–>•"
-    case instanceProperty = "•>•"
-}
-
 public enum Connector: String {
     case a = "ø"
 }
@@ -33,10 +23,25 @@ public enum Connector: String {
 infix operator |=>
 prefix operator •
 
+public protocol a: CustomStringConvertible {
+    func word(_ s: String) -> a
+    func compound(_ t: a, _ ts: [a]) -> a
+}
+
 public indirect enum Term: Hashable {
     case word(String)
 //      case instance([Term])
 //      case property([Term])
     
     case compound(Term, [Term])
+}
+
+extension Term: a {
+    public func word(_ s: String) -> a {
+        Term.word(s)
+    }
+    public func compound(_ t: a, _ ts: [a]) -> a {
+        Term.word(t.description)
+//        Term.compound(t, ts)
+    }
 }

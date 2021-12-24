@@ -88,9 +88,19 @@ print("exemplification", Rules.exemplification.rule, (applied?.conclusion == "C"
 print(
     "//----------- Experimental\n"
 )
+
+
+extension Copula {
+    var term: Term { .word(rawValue) }
+}
+
+extension Term {
+    var copula: Copula? { Copula(rawValue: description) }
+}
+
 let car = Term.word("car")
 let vehicle = Term.word("vehicle")
-let inheritance = Term.word("--&gt;")
+let inheritance = Term.word("-&gt;")
 let carIsAVehicle = Term.compound(inheritance, [car, vehicle])
 let i = Term.word("SELF")
 let know = Term.word("know")
@@ -99,6 +109,9 @@ print(
     "-----",
     iKnowCarIsAVehicle
 )
+
+
+
 let x = Term.word("VAR#x")
 let y = Term.word("VAR#y")
 let z = Term.word("VAR#z")
@@ -119,7 +132,7 @@ let apply = Term.compound(rule, [carIsAVehicle, iKnowCarIsAVehicle])
 print(apply)
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 3002}</string>
+			<string>{0, 3145}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>

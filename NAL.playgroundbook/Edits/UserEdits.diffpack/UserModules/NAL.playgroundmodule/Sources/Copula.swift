@@ -1,4 +1,14 @@
 
+public enum Copula: String {
+    case inheritance = "->" 
+    case similarity  = "<–>"
+    case implication = "=>"
+    case equivalence = "<=>"
+    case instance = "•–>"  
+    case property = "–>•"
+    case instanceProperty = "•>•"
+}
+
 public extension Copula {
     func makeStatement(_ subject: Term, _ predicate: Term) -> Statement {
         Statement(subject: subject, copula: self, predicate: predicate)
