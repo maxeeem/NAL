@@ -33,7 +33,11 @@ extension Concept {
         if let b = beliefs.get() {
             beliefs.put(b) // put back
             // apply rules
-            return Concept.rules.compactMap { r in r(judgement, b.judgement) }
+            let derived = Concept.rules.compactMap { r in r(judgement, b.judgement) }
+//            let refactored = [rule(deductionR), rule(inductionR), rule(abductionR), exemplificationRule] 
+//                .compactMap { r in r((judgement.statement, b.judgement.statement)) }
+//            debugPrint(derived.map({ $0.statement }) == refactored.map({ $0.conclusion }))
+            return derived
         }
         return [] // revision does not produce derived judgements
     }

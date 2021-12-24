@@ -15,6 +15,11 @@ extension Statement {
         self.copula = copula
         self.predicate = predicate
     }
+    public var terms: (Term, Term) { (subject, predicate) }
+}
+
+public func ==(_ s1: Statement, s2: Statement) -> Bool {
+    s1.copula == s2.copula && s1.terms == s2.terms 
 }
 
 extension Judgement {

@@ -51,13 +51,13 @@ print("Swift: ", reproduced?.compoundStatement)
 
 
 // MARK: Tests
-
-//assert(history == ["• bird –&gt; animal&lt;1.0, 0.9&gt;", "• robin –&gt; bird&lt;1.0, 0.9&gt;", ".  ⏱ animal –&gt; robin&lt;1.0, 0.4475&gt;", "• bird –&gt; animal?", ".  💡 bird –&gt; animal&lt;1.0, 0.9&gt;", "• bird –&gt; mammal?", ".  ⏱ robin –&gt; mammal&lt;1.0, 0.405&gt;", ".  ⏱ bird –&gt; mammal&lt;1.0, 0.2671&gt;", ".  ⏱ bird –&gt; mammal?", ".  💡 bird –&gt; mammal&lt;1.0, 0.2671&gt;", "• bird –&gt; mammal&lt;0.0, 0.9&gt;", ".  ⏱ robin –&gt; mammal&lt;0.0389, 0.0316&gt;", ".  ⏱ robin –&gt; bird&lt;1.0, 0.014&gt;", "• bird –&gt; mammal?", ".  💡 bird –&gt; mammal&lt;0.0389, 0.9035&gt;", "• bird –&gt; ?", ".  💡 bird –&gt; animal&lt;1.0, 0.9&gt;", "• ? –&gt; mammal", ".  💡 robin –&gt; mammal&lt;0.956, 0.4163&gt;", "• ? –&gt; ?", "\tI don\'t know 🤷‍♂️"])
+// print(history)
+assert(history == ["• bird -&gt; animal&lt;1.0, 0.9&gt;", "• robin -&gt; bird&lt;1.0, 0.9&gt;", ".  ⏱ animal -&gt; robin&lt;1.0, 0.4475&gt;", "• bird -&gt; animal?", ".  💡 bird -&gt; animal&lt;1.0, 0.9&gt;", "• bird -&gt; mammal?", ".  ⏱ robin -&gt; mammal&lt;1.0, 0.405&gt;", ".  ⏱ bird -&gt; mammal&lt;1.0, 0.2671&gt;", ".  ⏱ bird -&gt; mammal?", ".  💡 bird -&gt; mammal&lt;1.0, 0.2671&gt;", "• bird -&gt; mammal&lt;0.0, 0.9&gt;", ".  ⏱ robin -&gt; mammal&lt;0.0389, 0.0316&gt;", ".  ⏱ robin -&gt; bird&lt;1.0, 0.014&gt;", "• bird -&gt; mammal?", ".  💡 bird -&gt; mammal&lt;0.0389, 0.9035&gt;", "• bird -&gt; ?", ".  💡 bird -&gt; animal&lt;1.0, 0.9&gt;", "• ? -&gt; mammal", ".  💡 robin -&gt; mammal&lt;0.956, 0.4163&gt;", "• ? -&gt; ?", "\tI don\'t know 🤷‍♂️"])
 
  
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 1668}</string>
+			<string>{1, 1683}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

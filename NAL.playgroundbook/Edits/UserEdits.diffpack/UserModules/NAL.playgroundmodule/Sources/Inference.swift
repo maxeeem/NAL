@@ -94,3 +94,35 @@ public func exemplification(j1: Judgement, j2: Judgement) -> Judgement? {
     return Judgement(statement, truthValue)
 }
 
+
+
+// MARK: Experimental 
+
+public enum Rules {
+    case deduction
+    case induction
+    case abduction
+    case exemplification
+}
+
+extension Rules {
+    public var rule: Rule {
+        let S = Term.word("S")
+        let P = Term.word("P")
+        let M = Term.word("M")
+        switch self {
+        case .deduction:
+            return (M --> P, S --> M, S --> P)
+        case .induction:
+            return (M --> P, M --> S, S --> P)
+        case .abduction:
+            return (P --> M, S --> M, S --> P)
+        case .exemplification:
+            return (P --> M, M --> S, S --> P)
+        }
+    }
+    public var apply: (_ statements: Dual) -> Result { 
+        rule_generator(rule) 
+    }
+}
+

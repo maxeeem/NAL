@@ -34,7 +34,7 @@ print(or(0.2, 0.4)) // 0.52
 let j1: Judgement = ("robin" --&gt; "bird")-*(1.0, 0.8)
 let j2: Judgement = ("penguin" --&gt; "bird") -* (0.9, 0.9)
 print(
-    "\n------choice\n",
+    "------choice\n",
     choice(j1: j1, j2: j2)
 ) // robin
 let j3: Judgement = ("bird"--&gt;"animal")-*(1, 0.9)
@@ -61,6 +61,30 @@ print(
     "------exemplification\n",
     exemplification(j1: j9, j2: j10)!, "\n"
 ) // animal--&gt;robin&lt;1,0.45&gt;
+print(
+    "//----------- Inference Tests\n"
+)
+print("deduction", Rules.deduction.rule, Rules.deduction.apply((
+    "A" --&gt; "B",
+    "C" --&gt; "A"
+))?.0 == 
+    "C" --&gt; "B" ? "pass" : "fail")
+
+print("induction", Rules.induction.rule, Rules.induction.apply((
+    "A" --&gt; "B",
+    "A" --&gt; "Z"
+))?.0 ==
+    "Z" --&gt; "B" ? "pass" : "fail")
+
+print("abduction", Rules.abduction.rule, Rules.abduction.apply((
+    "A" --&gt; "B",
+    "C" --&gt; "B"
+))?.0 ==
+    "C" --&gt; "A" ? "pass" : "fail")
+
+let exemplificationRule = Rules.exemplification.apply
+let applied = exemplificationRule(("A" --&gt; "B", "B" --&gt; "C"))
+print("exemplification", Rules.exemplification.rule, (applied?.conclusion == "C" --&gt; "A" ? "pass" : "fail"), "\n")
 print(
     "//----------- Experimental\n"
 )
@@ -95,7 +119,7 @@ let apply = Term.compound(rule, [carIsAVehicle, iKnowCarIsAVehicle])
 print(apply)
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 2296}</string>
+			<string>{0, 3002}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>
