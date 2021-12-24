@@ -5,7 +5,11 @@ public extension Copula {
     }
 }
 
-infix operator -->
+precedencegroup Copula { // priority
+    higherThan: ComparisonPrecedence 
+}
+
+infix operator --> : Copula
 public func -->(_ subject: Term, predicate: Term) -> Statement {
     Copula.inheritance.makeStatement(subject, predicate)
 }

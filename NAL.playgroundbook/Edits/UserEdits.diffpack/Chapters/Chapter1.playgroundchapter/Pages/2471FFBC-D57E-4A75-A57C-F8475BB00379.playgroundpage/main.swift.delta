@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>let premise1   = "P" --&gt; "M"
+let premise2   = "M" --&gt; "S"
+let conclusion = "S" --&gt; "P"
+
+let test1 = "A" --&gt; "B"
+let test2 = "B" --&gt; "C"
+
+    // C -&gt; A
+
+extension Statement {
+    var terms: (Term, Term) {
+        (subject, predicate)
+    }
+}
+
+func ==(_ s1: Statement, s2: Statement) -&gt; Bool {
+    s1.copula == s2.copula &amp;&amp; s1.terms == s2.terms 
+}
+
+func +(_ a: (Term, Term), b: (Term, Term)) -&gt; (Term, Term, Term, Term) {
+    (a.0, a.1, b.0, b.1)
+}
+
+func firstIndex(of t: Term, in q: (Term, Term, Term, Term)) -&gt; Int? {
+    (q.0 == t ? 0 : 
+        (q.1 == t ? 1 : 
+            (q.2 == t ? 2 : 
+                (q.3 == t ? 3 : nil))))
+}
+
+func term(at i: Int, in q: (Term, Term, Term, Term)) -&gt; Term? {
+    (i == 0 ? q.0 : 
+        (i == 1 ? q.1 : 
+            (i == 2 ? q.2 :
+                (i == 3 ? q.3 : nil))))
+}
+
+/// rule as a matrix of optional booleans
+/// true identifies common term
+[
+    false, true,
+    true , nil ,
+    nil  , false
+]
+
+/// test sequence is a dual
+/// A -&gt; B
+/// B -&gt; C
+/// first symbol is `false`, second is `nil
+/// if there is no common term term identified by `true`
+/// then a conclusion could not be derived
+[
+    false, true,
+    true, nil
+]
+
+/// Optional&lt;Bool&gt; is represented as a Triple
+let common = true
+let first = false
+var second: Bool?
+[
+    false, nil, true
+] // OR 
+[ // as a list of terms
+    first, second, common
+]
+
+/// if there is a false then there is at least one type of symbol present 
+/// if there is a second then all are not repeats
+/// if there is no common term then a rule could not be applied
+/// otherwise this term is a common
+
+
+/// Optional&lt;Bool&gt; quad where 0 &amp; 1 are false &amp; true
+typealias Quad = (Bool?, Bool?, Bool?, Bool?)
+[
+    nil, false, true, nil
+]
+
+
+
+
+typealias Triple = (Bool?, Bool?, Bool?)
+/// triple can be represented as a matrix
+typealias Six = (Bool?, Bool?, Bool?, Bool?, Bool?, Bool?)
+
+
+/// opens a `var`iable channel that changes over time
+/// synchronized to system clock
+var channel: Optional&lt;Bool&gt; {
+    true
+}
+
+
+var identifyCommonTerms = { (s1: Statement, s2: Statement) -&gt; Quad in
+    let c = 0
+    let t1 = s1.terms
+    let t2 = s2.terms
+    let res = [t1.0, t1.1, t2.0, t2.1]
+    var out = Quad(nil,nil,nil,nil)
+    var tmp = [Term]()
+    for i in 0..&lt;3+1 {
+        if i == 0 {
+            tmp.append(res[0])
+            out.0 = false
+        }
+        if i == 1 {
+            if tmp.contains(res[1]) {
+                out.0 = true
+                out.1 = true
+            } else {
+                tmp.append(res[1])
+            }
+        }
+        if i == 2 {
+            if tmp.contains(res[2]) {
+                if let id = res.firstIndex(of: res[2]) {
+                    if id == 0 {
+                        out.0 = true
+                    }
+                    if id == 1 {
+                        out.1 = true
+                    }
+                }
+                out.2 = true
+            } else {
+                tmp.append(res[2])
+                out.2 = nil
+            }
+        }
+        if i == 3 {
+            if tmp.contains(res[3]) {
+                if let id = res.firstIndex(of: res[3]) {
+                    if id == 0 {
+                        out.0 = true
+                    }
+                    if id == 1 {
+                        out.1 = true
+                    }
+                    if id == 2 {
+                        out.2 == true
+                    }
+                }
+                out.3 = true
+            }
+        }
+    }
+    return out
+}
+
+//let input = [
+//    "A", "B",
+//    "B", "A"
+//]
+//
+//print(
+//    identifyCommonTerms("P" --&gt; "M", 
+//                        "M" --&gt; "S") // S -&gt; P
+//)
+//
+
+///
+/// if narsese can be translated to swift
+/// then a well-formed narsese sentence must compile
+///
+
+/// operations can be expressed as functions 
+/// assigned to a variable like above
+/// variable name is the name of operation in nars
+/// source code stored elsewhere
+/// 
+
+
+/// open an immutable channel 
+/// can represent eternal statements, for example:
+let immutableChannel: Question = test1-?
+
+/// Statement is a fundamental Dual
+typealias Dual = (Statement, Statement)
+typealias Rule = (Statement, Statement, Statement)
+typealias Apply = (_ rule: Rule) -&gt; (_ statements: Dual) -&gt; Result // reduce operation
+typealias Result = (conclusion: Statement, (Int, Int))?
+
+let rule: Apply = { (arg) -&gt; (Dual) -&gt; Result in
+    let (p1, p2, c) = arg
+    let commonTerms = identifyCommonTerms(p1, p2)
+    // TODO: validate there is at least two true
+    //       validate that not all are true
+    //       create statements from copula
+    return { (arg) in
+        let (t1, t2) = arg
+        let s1 = t1.subject --&gt; t1.predicate
+        let s2 = (commonTerms.2 == true ? (commonTerms.0 == true ? t1.subject : t1.predicate) : t2.subject)
+            --&gt;  (commonTerms.3 == true ? (commonTerms.0 == true ? t1.subject : t1.predicate) : t2.predicate)
+        if s1 == t1, s2 == t2 {
+            // conclusion
+            var terms = p1.terms + p2.terms
+            let subject = firstIndex(of: c.subject, in: terms)!
+            let predicate = firstIndex(of: c.predicate, in: terms)!
+            terms = t1.terms + t2.terms
+            let statement = term(at: subject, in: terms)! --&gt; term(at: predicate, in: terms)!
+            let tuple = (statement, (subject, predicate)) 
+            return tuple
+        }
+        return nil
+    }
+}
+
+let deduction = (
+    "M" --&gt; "P",
+    "S" --&gt; "M",
+    "S" --&gt; "P"
+) // 0 -&gt; 2, 1 -&gt; 1
+print("deduction", deduction, rule(deduction)((
+    "A" --&gt; "B",
+    "C" --&gt; "A"
+))?.conclusion == 
+    "C" --&gt; "B" ? "pass" : "fail")
+
+let induction = (
+    "M" --&gt; "P",
+    "M" --&gt; "S",
+    "S" --&gt; "P"
+)
+print("induction", induction, rule(induction)((
+    "A" --&gt; "B",
+    "A" --&gt; "Z"
+))?.conclusion ==
+    "Z" --&gt; "B" ? "pass" : "fail")
+
+let abduction = (
+    "P" --&gt; "M",
+    "S" --&gt; "M",
+    "S" --&gt; "P"
+) // 0 -&gt; 2, 1 -&gt; 0
+print("abduction", abduction, rule(abduction)((
+    "A" --&gt; "B",
+    "C" --&gt; "B"
+))?.conclusion ==
+    "C" --&gt; "A" ? "pass" : "fail")
+
+
+let exemplification = (
+    "P" --&gt; "M", 
+    "M" --&gt; "S",
+    "S" --&gt; "P"
+) // 0 -&gt; 4, 1 -&gt; 0
+let exemplificationRule = rule(exemplification)
+let test = (test1, test2)
+let apply = exemplificationRule(test)
+print("exemplification", exemplification, (apply?.conclusion == "C" --&gt; "A" ? "pass" : "fail"))
+
+
+
+func validate(a: Term, 
+              b: Term, 
+              c: Term, 
+              d: Term) -&gt; Bool {
+    print(a --&gt; b)
+    print(b --&gt; d)
+    return false
+}
+print("--")
+validate(a: test1.subject, 
+         b: test1.predicate, 
+         c: test2.subject, 
+         d: test2.predicate)
+//print(t1.copula == s1.copula)
+//print(t2.copula == s2.copula)
+//print(s1.copula.makeStatement(t1.subject, t1.predicate))
+//print(s2.copula.makeStatement(t2.subject, t2.predicate))
+
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 6797}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

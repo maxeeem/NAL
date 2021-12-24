@@ -116,6 +116,52 @@ extension Belief: CustomStringConvertible {
 // terms become variables: `car` -> `let car = Term.word("car")`
 extension Term {
     public var swift: String {
-        "let \(description) = \(type(of: self))(\"\(description)\")"
+        var id = ""
+        switch self {
+        case .word:
+            id = ".word"
+        case .compound:
+            id = ".compound"
+        }
+        return "`let \(description) = \(type(of: self))\(id)(\"\(description)\")"
     }
+    public var compoundStatement: Statement? {
+        switch self {
+        case .word: return nil
+        case .compound(let connector, let terms):
+            if terms.count == 2, let copula = Copula(rawValue: connector.description) {
+                return copula.makeStatement(terms[0], terms[1])
+            } else {
+                return nil
+            }
+        }
+    }
+}
+
+import Foundation
+extension Term {
+    public init?(s: String) {
+        let words = s.components(separatedBy: " ")
+        if words.count == 3, let copula = Copula(rawValue: words[1]), let t1 = Term(s: words[0]), let t2 = Term(s: words[2]) {
+            self = .compound(copula.term, [t1, t2])
+        } else if words.count > 1, let connector = Connector(rawValue: words[0]) {
+            let terms = words.dropFirst().compactMap(Term.init(s:))
+            if !terms.isEmpty {
+                self = .compound(connector.term, terms)
+            } else {
+                return nil
+            }
+        } else if words.count == 1, Copula(rawValue: words[0]) == nil {
+            self = .word(words[0])
+        } else {
+            return nil
+        }
+    }
+    var copula: Copula? { Copula(rawValue: description) }
+}
+extension Copula {
+    var term: Term { Term.word(rawValue) }
+}
+extension Connector {
+    var term: Term! { Term.word(rawValue) }
 }

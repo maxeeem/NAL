@@ -68,7 +68,7 @@ extension FrequencyInterval {
     var frequency: Double { lower / (1 - ignorance) }
     var confidence: Double { 1 - ignorance }
 }
-    
+
 // MARK: CustomStringConvertible
 
 extension Term: CustomStringConvertible {
@@ -77,6 +77,9 @@ extension Term: CustomStringConvertible {
         case .word(let word):
             return word
         case .compound(let connector, let terms):
+            if terms.count == 2, let copula = Copula(rawValue: connector.description) {
+                return "\(copula.makeStatement(terms[0], terms[1]))"
+            }
             return "\(connector) \(terms)"
         }
     }

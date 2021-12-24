@@ -6,8 +6,8 @@ public struct Judgement {
 
 public enum Question {
     case statement(Statement)
-    case special(Copula, Term)
     case general(Term, Copula)
+    case special(Copula, Term)
 }
 
 public struct Statement: Hashable {
@@ -17,21 +17,21 @@ public struct Statement: Hashable {
 }
 
 public enum Copula: String {
-    case inheritance = "–>" 
-    case similarity = "<–>"
+    case inheritance = "->" 
+    case similarity  = "<–>"
     case implication = "=>"
     case equivalence = "<=>"
-    
-//      case instance = "•–>"  
-//      case property = "–>•"
-//      case instanceProperty = "•>•"
+    case instance = "•–>"  
+    case property = "–>•"
+    case instanceProperty = "•>•"
 }
 
 public enum Connector: String {
     case a = "ø"
 }
-//  infix operator |=>
-//  prefix operator •
+
+infix operator |=>
+prefix operator •
 
 public indirect enum Term: Hashable {
     case word(String)

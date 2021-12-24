@@ -31,6 +31,7 @@ public func choice(j1: Judgement, j2: Judgement) -> Judgement {
 }
 
 public func conversion(j1: Judgement) -> Judgement? {
+    // { P -> S } |- S -> P
     if j1.statement.copula != .inheritance {
         return nil // N/A
     }
@@ -42,7 +43,7 @@ public func conversion(j1: Judgement) -> Judgement? {
 // MARK: Data-driven rules
 
 public func deduction(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ // assumptions
+    guard [ // { M -> P, S -> M } |- S -> P
         j1.statement.copula == .inheritance,
         j2.statement.copula == .inheritance,
         j1.statement.subject == j2.statement.predicate
@@ -55,7 +56,7 @@ public func deduction(j1: Judgement, j2: Judgement) -> Judgement? {
 }
 
 public func induction(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ //assumptions
+    guard [ // { M -> P, M -> S } |- S -> P
             j1.statement.copula == .inheritance,
             j2.statement.copula == .inheritance,
             j1.statement.subject == j2.statement.subject
@@ -68,7 +69,7 @@ public func induction(j1: Judgement, j2: Judgement) -> Judgement? {
 }
 
 public func abduction(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ // assumptions
+    guard [ // { P -> M, S -> M } |- S -> P
             j1.statement.copula == .inheritance,
             j2.statement.copula == .inheritance,
             j1.statement.predicate == j2.statement.predicate
@@ -81,7 +82,7 @@ public func abduction(j1: Judgement, j2: Judgement) -> Judgement? {
 }
 
 public func exemplification(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ // assumptions
+    guard [ // { P -> M, M -> S } |- S -> P
             j1.statement.copula == .inheritance,
             j2.statement.copula == .inheritance,
             j1.statement.predicate == j2.statement.subject
@@ -92,3 +93,4 @@ public func exemplification(j1: Judgement, j2: Judgement) -> Judgement? {
     let statement = (j2.statement.predicate --> j1.statement.subject)
     return Judgement(statement, truthValue)
 }
+
