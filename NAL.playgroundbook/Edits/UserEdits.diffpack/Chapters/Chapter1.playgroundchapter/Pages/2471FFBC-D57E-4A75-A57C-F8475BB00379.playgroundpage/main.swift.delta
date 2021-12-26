@@ -8,7 +8,8 @@
 	<array>
 		<dict>
 			<key>ModifiedContent</key>
-			<string>
+			<string>let name = "𝝥𝝠𝗟"
+
 // military uses made up language to teach their staff
 // use it to teach nars
 
@@ -24,14 +25,14 @@ extension Term {
         case .compound:
             id = ".compound"
         }
-        return "`let \(description) = \(type(of: self))\(id)(\"\(description)\")"
+        return "let \(description) = \(type(of: self))\(id)(\"\(description)\")"
     }
     public var compoundStatement: Statement? {
         switch self {
         case .word: return nil
         case .compound(let connector, let terms):
             if terms.count == 2, let copula = Copula(rawValue: connector.description) {
-                return copula.makeStatement(terms[0], terms[1])
+                return Statement(terms[0], copula, terms[1])
             } else {
                 return nil
             }
@@ -41,19 +42,19 @@ extension Term {
 
 import Foundation
 extension Term {
-    public init?(s: String) {
+    public init?(_ s: String) {
         let words = s.components(separatedBy: " ")
-        if words.count == 3, let copula = Copula(rawValue: words[1]), let t1 = Term(s: words[0]), let t2 = Term(s: words[2]) {
+        if words.count == 3, let copula = Copula(rawValue: words[1]), let t1 = Term(words[0]), let t2 = Term(words[2]) {
             self = .compound(copula.term, [t1, t2])
         } else if words.count &gt; 1, let connector = Connector(rawValue: words[0]) {
-            let terms = words.dropFirst().compactMap(Term.init(s:))
+            let terms = words.dropFirst().compactMap(Term.init(_:))
             if !terms.isEmpty {
                 self = .compound(connector.term, terms)
             } else {
                 return nil
             }
-        } else if words.count == 1, Copula(rawValue: words[0]) == nil {
-            self = .word(words[0])
+        } else if words.count == 1 {
+            self = Term.word(words[0])
         } else {
             return nil
         }
@@ -68,7 +69,15 @@ extension Connector {
 }
 
 
+// English "I" refers to Narsese "SELF" 
+//
+// Input string for a type that can be instantiated from a greeting template
+// "Hi, I'm \(name) 👋"
+
 // experimental
+
+print("Hi, I'm \(name) 👋")
+print() // ready for input
 let bird = Term.word("bird")
 let animal = Term.word("animal")
 let mammal = Term.word("mammal")
@@ -76,9 +85,23 @@ let mammal = Term.word("mammal")
 print("Swift: ", mammal.swift) 
 let compound = Term.compound(.word(Copula.inheritance.rawValue), [bird, animal])
 print("Swift: ", compound.swift)
-let reproduced = Term(s: compound.description)
+let reproduced = Term(compound.description)
 print("Swift: ", reproduced == compound)
 print("Swift: ", reproduced?.compoundStatement)
+
+
+
+import Foundation
+var narseseToEnglish: (String) -&gt; String = { narsese in
+    var english = narsese.replacingOccurrences(of: "-&gt;", with: "is a type of")
+    english = english.replacingOccurrences(of: " ?", with: " what?")
+    return english
+} 
+
+
+//#if targetEnvironment(simulator)
+//#sourceLocation(file: "Source.swift", line: 1)
+
 
 
 
@@ -138,7 +161,7 @@ var channel: Optional&lt;Bool&gt; {
 
 /// open an immutable channel 
 /// can represent eternal statements or questions:
-let immutableChannel: Sentence = ("A"--&gt;"B")-* // -?
+let immutableChannel: Judgement = ("A"--&gt;"B")-* // -?
 
 
 ///
@@ -173,7 +196,7 @@ func validate(a: Term,
 //print(s2.copula.makeStatement(t2.subject, t2.predicate))
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 4156}</string>
+			<string>{1, 4671}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

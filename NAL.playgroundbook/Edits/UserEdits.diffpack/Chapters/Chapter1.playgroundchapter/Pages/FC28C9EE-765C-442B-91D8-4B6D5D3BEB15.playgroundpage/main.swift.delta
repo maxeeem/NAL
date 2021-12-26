@@ -37,55 +37,44 @@ print(
     "------choice\n",
     choice(j1: j1, j2: j2)
 ) // robin
-let j3: Judgement = ("bird"--&gt;"animal")-*(1, 0.9)
-let j4: Judgement = ("robin"--&gt;"bird")-*(1, 0.9)
-print(
-    "------deduction\n",
-    deduction(j1: j3, j2: j4)!
-) // robin--&gt;animal&lt;1,0.81&gt;
-let j5: Judgement = ("robin" --&gt; "animal") -* (1.0, 0.9)
-let j6: Judgement = ("robin" --&gt; "bird")-*(1.0, 0.9)
-print(
-    "------induction\n",
-    induction(j1: j5, j2: j6)!
-) // bird--&gt;animal&lt;1,0.45&gt;
-let j7: Judgement = ("bird"--&gt;"animal")-*(1.0, 0.9)
-let j8: Judgement = ("robin"--&gt;"animal")-*(1.0, 0.9)
-print(
-    "------abduction\n",
-    abduction(j1: j7, j2: j8)!
-) // robin--&gt;bird&lt;1,0.45&gt;
-let j9: Judgement = ("robin"--&gt;"bird")-*(1.0, 0.9)
-let j10: Judgement = ("bird"--&gt;"animal")-*(1.0, 0.9)
-print(
-    "------exemplification\n",
-    exemplification(j1: j9, j2: j10)!, "\n"
-) // animal--&gt;robin&lt;1,0.45&gt;
+
 print(
     "//----------- Inference Tests\n"
 )
 print("deduction", Rules.deduction.rule, Rules.deduction.apply((
-    "A" --&gt; "B",
-    "C" --&gt; "A"
-))?.0 == 
-    "C" --&gt; "B" ? "pass" : "fail")
+    ("A" --&gt; "B")-*, 
+    ("C" --&gt; "A")-*
+)) == 
+    ("C" --&gt; "B")-*(1, 0.81) ? "pass" : "fail")
 
 print("induction", Rules.induction.rule, Rules.induction.apply((
-    "A" --&gt; "B",
-    "A" --&gt; "Z"
-))?.0 ==
-    "Z" --&gt; "B" ? "pass" : "fail")
+    ("A" --&gt; "B")-*,
+    ("A" --&gt; "Z")-*
+)) ==
+    ("Z" --&gt; "B")-*(1, 0.4475) ? "pass" : "fail")
 
 print("abduction", Rules.abduction.rule, Rules.abduction.apply((
-    "A" --&gt; "B",
-    "C" --&gt; "B"
-))?.0 ==
-    "C" --&gt; "A" ? "pass" : "fail")
+    ("A" --&gt; "B")-*,
+    ("C" --&gt; "B")-*
+)) ==
+    ("C" --&gt; "A")-*(1, 0.4475) ? "pass" : "fail")
 
 let exemplificationRule = Rules.exemplification.apply
-let applied = exemplificationRule(("A" --&gt; "B", "B" --&gt; "C"))
-print("exemplification", Rules.exemplification.rule, (applied?.conclusion == "C" --&gt; "A" ? "pass" : "fail"), "\n")
-print(
+let applied = exemplificationRule((("A" --&gt; "B")-*, ("B" --&gt; "C")-*))
+print("exemplification", Rules.exemplification.rule, (applied == ("C" --&gt; "A")-*(1, 0.4475) ? "pass" : "fail"))
+
+print("comparison", Rules.comparison.rule, Rules.comparison.apply((
+    ("A" --&gt; "B")-*,
+    ("A" --&gt; "C")-*
+)) ==
+    ("C" &lt;-&gt; "B")-*(1, 0.4475) ? "pass" : "fail")
+
+//print(Rules.comparison.apply((
+//    ("A" --&gt; "B")-*,
+//    ("A" --&gt; "C")-*
+//)))
+
+print("\n",
     "//----------- Experimental\n"
 )
 
@@ -102,7 +91,10 @@ extension Term {
             return nil
         case .compound(let connector, let terms):
             // TODO: perform additional checks for number of terms and their types
-            return Copula(rawValue: connector.description)?.makeStatement(terms[0], terms[1])
+            if let copula = Copula(rawValue: connector.description) {
+                return Statement(terms[0], copula, terms[1])
+            }
+            return nil
         }
     }
 }
@@ -141,7 +133,7 @@ let apply = Term.compound(rule, [carIsAVehicle, iKnowCarIsAVehicle])
 print(apply)
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 3485}</string>
+			<string>{0, 3083}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>

@@ -58,12 +58,9 @@ public func +(_ j: Judgement, p: Double) -> Belief {
 }
 
 
-infix operator -*
+infix operator -* : Copula
 public func -*(_ s: Statement, _ tv: (Double, Double)) -> Sentence {
     Sentence(s -* (tv.0, tv.1))
-}
-public func -*(_ s: Statement, _ tv: (Double, Double)) -> Judgement {
-    Judgement(s, TruthValue(tv.0, tv.1))
 }
 
 postfix operator -*
@@ -71,6 +68,7 @@ extension Statement {
     public static postfix func -*(_ s: Statement) -> Sentence {
         s -* (1, 0.9)
     }
+    
 }
 
 postfix operator -?

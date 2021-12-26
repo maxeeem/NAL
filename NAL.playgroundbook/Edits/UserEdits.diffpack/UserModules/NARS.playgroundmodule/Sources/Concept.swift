@@ -30,10 +30,10 @@ public struct Concept: Item {
     let beliefs = Bag<Belief>() // judgements
 }
 
-extension Concept {
-    public typealias Rule = (Judgement, Judgement) -> Judgement?
-    public static let rules: [Rule] = [deduction, induction, abduction, exemplification]
-}
+//extension Concept {
+//    public typealias Rule = (Judgement, Judgement) -> Judgement?
+//    public static let rules: [Rule] = [deduction, induction, abduction, exemplification]
+//}
 
 extension Concept {
     // returns derived judgements if any
@@ -52,11 +52,8 @@ extension Concept {
         if let b = beliefs.get() {
             beliefs.put(b) // put back
             // apply rules
-            let derived = Concept.rules.compactMap { r in r(judgement, b.judgement) }
-//            let refactored = [rule(deductionR), rule(inductionR), rule(abductionR), exemplificationRule] 
-//                .compactMap { r in r((judgement.statement, b.judgement.statement)) }
-//            debugPrint(derived.map({ $0.statement }) == refactored.map({ $0.conclusion }))
-            return derived
+            return Rules.allCases
+                .compactMap { r in r.apply((judgement, b.judgement)) }
         }
         return [] // revision does not produce derived judgements
     }
@@ -88,7 +85,7 @@ extension Concept {
             beliefs.put(b) // put back
             // all other rules // backwards inference
             let j = Judgement(s, TruthValue(1, 0.45)) // TODO: finish
-            return Concept.rules.compactMap { r in r(j, b.judgement) }
+            return Rules.allCases.compactMap { r in r.apply((j, b.judgement)) }
         }
         return [] // no results found
     }

@@ -42,67 +42,14 @@ public func conversion(j1: Judgement) -> Judgement? {
 
 // MARK: Data-driven rules
 
-public func deduction(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ // { M -> P, S -> M } |- S -> P
-        j1.statement.copula == .inheritance,
-        j2.statement.copula == .inheritance,
-        j1.statement.subject == j2.statement.predicate
-    ].allValid else {
-        return nil // N/A
-    }
-    let truthValue = TruthValue.deduction(j1.truthValue, j2.truthValue)
-    let statement = (j2.statement.subject --> j1.statement.predicate)
-    return Judgement(statement, truthValue)
-}
-
-public func induction(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ // { M -> P, M -> S } |- S -> P
-            j1.statement.copula == .inheritance,
-            j2.statement.copula == .inheritance,
-            j1.statement.subject == j2.statement.subject
-    ].allValid else {
-        return nil // N/A
-    }
-    let truthValue = TruthValue.induction(j1.truthValue, j2.truthValue)
-    let statement = (j2.statement.predicate --> j1.statement.predicate)
-    return Judgement(statement, truthValue)
-}
-
-public func abduction(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ // { P -> M, S -> M } |- S -> P
-            j1.statement.copula == .inheritance,
-            j2.statement.copula == .inheritance,
-            j1.statement.predicate == j2.statement.predicate
-    ].allValid else {
-        return nil // N/A
-    }
-    let truthValue = TruthValue.abduction(j1.truthValue, j2.truthValue)
-    let statement = (j2.statement.subject --> j1.statement.subject)
-    return Judgement(statement, truthValue)
-}
-
-public func exemplification(j1: Judgement, j2: Judgement) -> Judgement? {
-    guard [ // { P -> M, M -> S } |- S -> P
-            j1.statement.copula == .inheritance,
-            j2.statement.copula == .inheritance,
-            j1.statement.predicate == j2.statement.subject
-    ].allValid else {
-        return nil // N/A
-    }
-    let truthValue = TruthValue.exemplification(j1.truthValue, j2.truthValue)
-    let statement = (j2.statement.predicate --> j1.statement.subject)
-    return Judgement(statement, truthValue)
-}
-
-
-
-// MARK: Experimental 
-
-public enum Rules {
+public enum Rules: CaseIterable {
+    // NAL-1
     case deduction
     case induction
     case abduction
     case exemplification
+    // NAL-2
+    case comparison
 }
 
 extension Rules {
@@ -112,16 +59,27 @@ extension Rules {
         let M = Term.word("M")
         switch self {
         case .deduction:
-            return (M --> P, S --> M, S --> P)
+            return (M --> P, S --> M, S --> P, tf)
         case .induction:
-            return (M --> P, M --> S, S --> P)
+            return (M --> P, M --> S, S --> P, tf)
         case .abduction:
-            return (P --> M, S --> M, S --> P)
+            return (P --> M, S --> M, S --> P, tf)
         case .exemplification:
-            return (P --> M, M --> S, S --> P)
+            return (P --> M, M --> S, S --> P, tf)
+        case .comparison:
+            return (M --> P, M --> S, S <-> P, tf)
         }
     }
-    public var apply: (_ statements: Dual) -> Result { 
+    private var tf: TruthFunction {
+        switch self {
+        case .deduction: return TruthValue.deduction
+        case .induction: return TruthValue.induction
+        case .abduction: return TruthValue.abduction
+        case .exemplification: return TruthValue.exemplification
+        case .comparison: return TruthValue.comparison
+        }
+    }
+    public var apply: (_ judgements: (Judgement, Judgement)) -> Judgement? { 
         rule_generator(rule) 
     }
 }

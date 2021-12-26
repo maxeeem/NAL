@@ -1,10 +1,12 @@
 
-public struct Judgement {
+// Grammar rules
+
+public struct Judgement: Hashable {
     public let statement: Statement
     public let truthValue: TruthValue
 }
 
-public enum Question {
+public enum Question: Equatable {
     case statement(Statement)
     case general(Term, Copula)
     case special(Copula, Term)
@@ -18,10 +20,9 @@ public struct Statement: Hashable {
 
 public enum Connector: String {
     case a = "ø"
+    case extSet = "{}"
+    case intSet = "[]"
 }
-
-infix operator |=>
-prefix operator •
 
 public protocol a: CustomStringConvertible {
     func word(_ s: String) -> a

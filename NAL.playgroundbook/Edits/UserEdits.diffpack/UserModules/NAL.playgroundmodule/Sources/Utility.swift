@@ -9,6 +9,40 @@ struct FrequencyInterval {
     let upper: Double
 }
 
+// convenience initializer for Judgement
+public func +(_ s: Statement, fc: (Double, Double)) -> Judgement {
+    Judgement(s, TruthValue(fc.0, fc.1))
+}
+
+infix operator -* : Copula
+public func -* (_ s: Statement, _ fc: (Double, Double)) -> Judgement {
+    s + fc
+}
+
+postfix operator -*
+extension Statement {
+    public static postfix func -*(_ s: Statement) -> Judgement {
+        s -* (1, 0.9)
+    }
+    
+}
+
+//prefix operator •
+//
+//public extension Copula {
+//    func makeStatement(_ subject: Term, _ predicate: Term) -> Statement {
+//        Statement(subject: subject, copula: self, predicate: predicate)
+//    }
+//    static func makeStatement(_ copula: Copula) -> (_ s: Term, _ p: Term) -> Statement { 
+//        { s, p in
+//            copula.makeStatement(s, p)
+//        }
+//    }
+//    init(_ copula: Copula) {
+//        self = copula
+//    }
+//}
+
 extension Statement {
     public init(_ subject: Term, _ copula: Copula, _ predicate: Term) {
         self.subject = subject
@@ -83,7 +117,7 @@ extension Term: CustomStringConvertible {
             return word
         case .compound(let connector, let terms):
             if terms.count == 2, let copula = Copula(rawValue: connector.description) {
-                return "\(copula.makeStatement(terms[0], terms[1]))"
+                return "\(Statement(terms[0], copula, terms[1]))"
             }
             return "\(connector) \(terms)"
         }
