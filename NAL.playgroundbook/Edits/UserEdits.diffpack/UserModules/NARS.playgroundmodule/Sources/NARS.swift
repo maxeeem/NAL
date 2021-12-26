@@ -14,6 +14,7 @@ public final class NARS {
     }
     
     public func process(_ input: Sentence...) {
+        // TODO: add buffer
         input.forEach { s in process(s, userInitiated: true) }
     }
 }

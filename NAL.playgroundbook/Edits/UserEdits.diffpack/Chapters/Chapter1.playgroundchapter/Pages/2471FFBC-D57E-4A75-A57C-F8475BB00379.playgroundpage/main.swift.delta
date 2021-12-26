@@ -103,8 +103,18 @@ var narseseToEnglish: (String) -&gt; String = { narsese in
 //#sourceLocation(file: "Source.swift", line: 1)
 
 
+/// https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#//apple_ref/swift/grammar/typealias-declaration
 
-
+public typealias ab = (a, a, a, a)
+/*
+ /// https://stackoverflow.com/a/27084702
+ struct Parser&lt;A&gt; {
+ let f: (String) -&gt; [(A, String)]
+ }
+ 
+ func parse&lt;A&gt;(stringToParse: String, parser: Parser) 
+ let parser = Parser&lt;Term&gt; { string in return [string, tail(string)] }
+ */
 
 
 
@@ -196,7 +206,7 @@ func validate(a: Term,
 //print(s2.copula.makeStatement(t2.subject, t2.predicate))
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 4671}</string>
+			<string>{1, 5059}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

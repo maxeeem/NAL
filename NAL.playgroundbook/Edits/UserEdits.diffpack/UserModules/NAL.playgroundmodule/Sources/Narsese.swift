@@ -1,5 +1,5 @@
 
-// Grammar rules
+// Grammar
 
 public struct Judgement: Hashable {
     public let statement: Statement

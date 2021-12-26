@@ -30,11 +30,6 @@ public struct Concept: Item {
     let beliefs = Bag<Belief>() // judgements
 }
 
-//extension Concept {
-//    public typealias Rule = (Judgement, Judgement) -> Judgement?
-//    public static let rules: [Rule] = [deduction, induction, abduction, exemplification]
-//}
-
 extension Concept {
     // returns derived judgements if any
     func accept(_ j: Judgement, subject: Bool = true) -> [Judgement] {

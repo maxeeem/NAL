@@ -4,6 +4,8 @@ public struct TruthValue: Hashable {
     let confidence: Double
 }
 
+public typealias TruthFunction = (TruthValue, TruthValue) -> TruthValue
+
 extension TruthValue {
     static var conversion: (_ tv1: TruthValue) -> TruthValue = { (tv1) in
         let f1 = tv1.frequency

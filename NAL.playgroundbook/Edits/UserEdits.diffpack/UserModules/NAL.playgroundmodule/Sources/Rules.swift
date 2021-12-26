@@ -1,65 +1,14 @@
 
 
-
-/// https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#//apple_ref/swift/grammar/typealias-declaration
-
 /// Swift Tuple is a basic primitive
 typealias Triple = (Bool?, Bool?, Bool?)
-typealias Quad = (Bool?, Bool?, Bool?, Bool?)
-//typealias Six = (Bool?, Bool?, Bool?, Bool?, Bool?, Bool?)
+typealias Quad   = (Bool?, Bool?, Bool?, Bool?)
 
 /// Statement is a fundamental type
 public typealias Rule = (Statement, Statement, Statement, TruthFunction)
-public typealias TruthFunction = (TruthValue, TruthValue) -> TruthValue
-
 public typealias Apply = (_ judgements: (Judgement, Judgement)) -> Judgement? // reduce operation
 
-public typealias Terms = (Term, Term, Term, Term)
-public typealias ab = (a, a, a, a)
-/*
-/// https://stackoverflow.com/a/27084702
-struct Parser<A> {
-    let f: (String) -> [(A, String)]
-}
-
-func parse<A>(stringToParse: String, parser: Parser) 
-let parser = Parser<Term> { string in return [string, tail(string)] }
- */
-func +(_ a: (Term, Term), b: (Term, Term)) -> Terms {
-    (a.0, a.1, b.0, b.1)
-}
-
-func firstIndex(of t: Term, in q: Terms) -> Int? {
-    (q.0 == t ? 0 :
-    (q.1 == t ? 1 : 
-    (q.2 == t ? 2 : 
-    (q.3 == t ? 3 : nil))))
-}
-
-func term(at i: Int, in q: Terms) -> Term? {
-    (i == 0 ? q.0 : 
-    (i == 1 ? q.1 : 
-    (i == 2 ? q.2 :
-    (i == 3 ? q.3 : nil))))
-}
-
-func set(_ q: inout Quad, _ i: Int, _ value: Bool?) {
-    (i == 0 ? q.0 = value :
-    (i == 1 ? q.1 = value :
-    (i == 2 ? q.2 = value :
-    (i == 3 ? q.3 = value : () ))))
-}
-
-func countTruths(in q: Quad) -> Int {
-    var i = 0
-    let x = true
-    if q.0 == x { i += 1 }
-    if q.1 == x { i += 1 }
-    if q.2 == x { i += 1 }
-    if q.3 == x { i += 1 }
-    return i
-}
-
+// MARK: Rule application
 
 let rule_generator: (_ rule: Rule) -> Apply = { (arg) -> ((Judgement, Judgement)) -> Judgement? in
     let (p1, p2, c, tf) = arg
@@ -94,15 +43,7 @@ let rule_generator: (_ rule: Rule) -> Apply = { (arg) -> ((Judgement, Judgement)
     }
 }
 
-extension Judgement {
-    var subject: Term { statement.subject }
-    var copula: Copula { statement.copula }
-    var predicate: Term { statement.predicate }
-    var terms: (Term, Term) { statement.terms }
-}
-
-
-var identifyCommonTerms: ((Statement, Statement)) -> Quad = { (arg) in
+private var identifyCommonTerms: ((Statement, Statement)) -> Quad = { (arg) in
     let t1 = arg.0.terms
     let t2 = arg.1.terms
     let res = t1 + t2
@@ -159,3 +100,44 @@ var identifyCommonTerms: ((Statement, Statement)) -> Quad = { (arg) in
  */
     return out
 }
+
+
+// MARK: Utility
+
+private typealias Terms  = (Term, Term, Term, Term)
+
+private func +(_ a: (Term, Term), b: (Term, Term)) -> Terms {
+    (a.0, a.1, b.0, b.1)
+}
+
+private func firstIndex(of t: Term, in q: Terms) -> Int? {
+    (q.0 == t ? 0 :
+    (q.1 == t ? 1 : 
+    (q.2 == t ? 2 : 
+    (q.3 == t ? 3 : nil))))
+}
+
+private func term(at i: Int, in q: Terms) -> Term? {
+    (i == 0 ? q.0 : 
+    (i == 1 ? q.1 : 
+    (i == 2 ? q.2 :
+    (i == 3 ? q.3 : nil))))
+}
+
+private func set(_ q: inout Quad, _ i: Int, _ value: Bool?) {
+    (i == 0 ? q.0 = value :
+    (i == 1 ? q.1 = value :
+    (i == 2 ? q.2 = value :
+    (i == 3 ? q.3 = value : () ))))
+}
+
+//private func countTruths(in q: Quad) -> Int {
+//    var i = 0
+//    let x = true
+//    if q.0 == x { i += 1 }
+//    if q.1 == x { i += 1 }
+//    if q.2 == x { i += 1 }
+//    if q.3 == x { i += 1 }
+//    return i
+//}
+
