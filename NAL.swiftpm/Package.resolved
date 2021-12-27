@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "NARS-Swift",
+        "repositoryURL": "https://github.com/maxeeem/NARS-Swift",
+        "state": {
+          "branch": null,
+          "revision": "e1d9ea766fafd2a3f3c03c417601b2590f286d40",
+          "version": "0.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
